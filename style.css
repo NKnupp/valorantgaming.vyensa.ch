@@ -1,0 +1,231 @@
+/* Body */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #e0e0e0;
+  }
+
+  .container {
+    display: flex;
+  }
+
+  .sidebar {
+    width: 250px;
+    background: #1c1c1c;
+    padding: 1rem;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+
+  .sidebar h2, .sidebar h3 {
+    color: #ff4655;
+    margin-top: 0;
+  }
+
+  .sidebar select, .filter-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  /* Dropdown */
+  .dropdown select {
+    width: 100%;
+    padding: 0.8rem;
+    background: #333;
+    color: white;
+    border: 1px solid #ff4655;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .dropdown select:focus {
+    border-color: #ff4655;
+  }
+
+  /* Filter Buttons */
+  .filter-buttons {
+    margin-top: 1rem;
+  }
+
+  .filter-btn {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    background: #2b2b2b;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+
+  .filter-btn.active {
+    background: #ff4655;
+  }
+
+  /* Agent Grid */
+  .agent-grid {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .agent {
+    width: 48%;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.2s;
+  }
+
+  .agent:hover {
+    border-color: #ff4655;
+  }
+
+  /* Content */
+  .content {
+    flex: 1;
+    padding: 2rem;
+  }
+
+  .map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  #map-title {
+    font-size: 2rem;
+  }
+
+  .map-img {
+    width: 200px;
+    border-radius: 12px;
+    border: 2px solid #333;
+  }
+
+  .map-section {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .map-block {
+    background: #1e1e1e;
+    padding: 1rem;
+    border-radius: 12px;
+    flex: 1;
+  }
+
+  .smoke-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 0.5rem;
+  }
+
+  /* Lineup Grid */
+  .lineup-grid {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .lineup-card {
+    background: #1c1c1c;
+    padding: 1rem;
+    border-radius: 12px;
+    width: calc(33% - 1rem);
+  }
+
+  .lineup-card img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .lineup-card button {
+    margin-top: 0.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    background: #ff4655;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background: #1e1e1e;
+    padding: 2rem;
+    border-radius: 12px;
+    color: white;
+    max-width: 400px;
+    width: 90%;
+  }
+
+  .close-btn {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  /* Header */
+  .header {
+    background: #121212;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .header h1 {
+    color: #ff4655;
+    font-size: 2.5rem;
+  }
+
+  /* Sidebar - Aktuellen Agenten hervorheben */
+  .agent.active {
+    border: 3px solid #ff0000; /* Rote Umrandung für den aktiven Agenten */
+    padding: 3px;
+    transition: border-color 0.3s ease;
+  }
+
+  /* Box für den Agenten-Guide */
+  #agent-guide {
+    background-color: #1c1c1c;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+  }
+
+  #agent-guide h2 {
+    font-size: 2rem;
+    color: #ff4655;
+  }
+
+  #agent-guide p {
+    font-size: 1rem;
+    color: #e0e0e0;
+  }
+
+  /* Lineup Grid für Agenten */
+  #lineup-grid {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }

@@ -1,0 +1,37 @@
+{
+    "viper": {
+      "description": "Viper ist ein Controller mit starken Fähigkeiten, um das Spielfeld zu dominieren. Ihre Gift-Wände und Smokes machen sie zu einem der stärksten Agenten auf jeder Map.",
+      "lineups": [
+        {
+          "title": "Attack A Smoke",
+          "img": "images/lineups/valoplant-placeholder.png",
+          "description": "Push auf A mit Wall + One-way.",
+          "side": "attack"
+        },
+        {
+          "title": "Defend Mid Smoke",
+          "img": "images/lineups/valoplant-placeholder.png",
+          "description": "Mid blockieren von Defender Spawn.",
+          "side": "defend"
+        }
+      ]
+    },
+    "sova": {
+      "description": "Sova ist ein Initiator, der Informationen liefert und mit seinen Pfeilen das Feld dominiert. Seine Recon-Darts sind entscheidend, um Gegner zu finden.",
+      "lineups": [
+        {
+          "title": "Recon Dart Attack",
+          "img": "images/lineups/valoplant-placeholder.png",
+          "description": "Early Info beim Push holen.",
+          "side": "attack"
+        },
+        {
+          "title": "B Site Retake",
+          "img": "images/lineups/valoplant-placeholder.png",
+          "description": "Shockdarts bei Retake setzen.",
+          "side": "defend"
+        }
+      ]
+    }
+  }
+  

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valorant Lineups</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>Valorant Lineups</h1>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Navigation</h2>
+
+      <label for="map-select">Map auswählen:</label>
+      <div class="dropdown">
+        <select id="map-select">
+          <option value="ascent">Ascent</option>
+          <option value="bind">Bind</option>
+          <option value="haven">Haven</option>
+        </select>
+      </div>
+
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">Alle</button>
+        <button class="filter-btn" data-filter="attack">Attack</button>
+        <button class="filter-btn" data-filter="defend">Defend</button>
+      </div>
+
+      <h3>Agenten</h3>
+      <div class="agent-grid">
+        <img src="images/agents/viper.png" alt="Viper" class="agent" data-agent="viper" id="viper-agent"/>
+        <img src="images/agents/sova.png" alt="Sova" class="agent" data-agent="sova" id="sova-agent"/>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="map-header">
+        <h1 id="map-title">Ascent</h1>
+      </div>
+
+      <section class="map-section">
+        <div class="map-block">
+          <h2>Attack</h2>
+          <h3>Infos</h3>
+          <p id="attack-info">Mid Control ist wichtig auf Ascent. Koordiniertes Pushen hilft beim Site-Einnehmen.</p>
+          <h3>Default Smokes</h3>
+          <img src="images/smokes/default-smokes-placeholder.png" alt="Attack Smokes" class="smoke-image"/>
+        </div>
+
+        <div class="map-block">
+          <h2>Defend</h2>
+          <h3>Infos</h3>
+          <p id="defend-info">Nutze Operator auf A Heaven, um Mid zu halten. Smokes auf B Eingang sind effektiv.</p>
+          <h3>Default Smokes</h3>
+          <img src="images/smokes/default-smokes-placeholder.png" alt="Defend Smokes" class="smoke-image"/>
+        </div>
+      </section>
+
+      <section id="agent-guide">
+        <h2>Agenten Guide: <span id="agent-name">Viper</span></h2>
+        <p id="agent-description">Viper ist ein Controller mit starken Fähigkeiten, um das Spielfeld zu dominieren. Ihre Gift-Wände und Smokes machen sie zu einem der stärksten Agenten auf jeder Map.</p>
+      </section>
+
+      <section id="lineups">
+        <h2>Lineups für <span id="lineup-agent-name">Viper</span></h2>
+        <div class="lineup-grid" id="lineup-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="lineup-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3>Lineup Anleitung</h3>
+      <p id="lineup-description">Hier erscheint die Beschreibung des Lineups.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Valorant Lineups Fanprojekt</p>
+  </footer>
+
+  <script>
+    let agentData = {};
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    let currentFilter = 'all';
+    let currentAgent = 'viper';
+
+    // Map Infos
+    const mapInfos = {
+      ascent: {
+        attackInfo: "Mid Control ist wichtig auf Ascent. Koordiniertes Pushen hilft beim Site-Einnehmen.",
+        defendInfo: "Nutze Operator auf A Heaven, um Mid zu halten. Smokes auf B Eingang sind effektiv."
+      },
+      bind: {
+        attackInfo: "Push Showers mit Smokes, sichere Teleporter für schnelle Rotationen.",
+        defendInfo: "Smoke Hookah und spiele passiv mit Utility Delay."
+      },
+      haven: {
+        attackInfo: "Split Push A und C, nutze Mid Control über Garage.",
+        defendInfo: "A Long kontrollieren und Garage absichern."
+      }
+    };
+
+    // Event Listener für Filter
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderLineups(currentAgent, currentFilter);
+      });
+    });
+
+    // Map wechseln
+    const mapSelect = document.getElementById('map-select');
+    const mapTitle = document.getElementById('map-title');
+    const attackInfo = document.getElementById('attack-info');
+    const defendInfo = document.getElementById('defend-info');
+
+    mapSelect.addEventListener('change', () => {
+      const selectedMap = mapSelect.value;
+      mapTitle.textContent = selectedMap.charAt(0).toUpperCase() + selectedMap.slice(1);
+      attackInfo.textContent = mapInfos[selectedMap].attackInfo;
+      defendInfo.textContent = mapInfos[selectedMap].defendInfo;
+    });
+
+    // Agenten-Daten laden
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        agentData = data;
+        initializeAgent(currentAgent);
+      });
+
+    // Agenten wechseln
+    const agentGrid = document.querySelector('.agent-grid');
+    const agentNameSpan = document.getElementById('lineup-agent-name');
+    const agentDescriptionSpan = document.getElementById('agent-description');
+    const agentNameSpanGuide = document.getElementById('agent-name');
+
+    agentGrid.addEventListener('click', (e) => {
+      if (e.target.classList.contains('agent')) {
+        currentAgent = e.target.dataset.agent;
+        initializeAgent(currentAgent);
+      }
+    });
+
+    // Agenten und Lineups initialisieren
+    function initializeAgent(agent) {
+      // Titel im Agenten Guide und Lineup aktualisieren
+      agentNameSpan.textContent = agent.charAt(0).toUpperCase() + agent.slice(1);
+      agentDescriptionSpan.textContent = agentData[agent].description;
+      agentNameSpanGuide.textContent = agent.charAt(0).toUpperCase() + agent.slice(1);
+
+      // Sidebar aktualisieren (Indikator für den aktuellen Agenten)
+      document.querySelectorAll('.agent').forEach(agentElement => {
+        agentElement.classList.remove('active');
+      });
+      document.getElementById(`${agent}-agent`).classList.add('active');
+
+      // Lineups rendern
+      renderLineups(agent, currentFilter);
+    }
+
+    // Lineup-Templates rendern
+    function renderLineups(agent, filter) {
+      const lineupGrid = document.getElementById('lineup-grid');
+      lineupGrid.innerHTML = '';
+
+      agentData[agent].lineups.forEach(lineup => {
+        if (filter === 'all' || lineup.side === filter) {
+          const card = document.createElement('div');
+          card.classList.add('lineup-card');
+          card.innerHTML = `
+            <img src="${lineup.img}" alt="${lineup.title}" />
+            <button data-description="${lineup.description}">${lineup.title}</button>
+          `;
+          lineupGrid.appendChild(card);
+        }
+      });
+    }
+
+  </script>
+</body>
+</html>
