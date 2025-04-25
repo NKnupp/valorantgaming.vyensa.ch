@@ -20,7 +20,6 @@
         <select id="map-select"></select> <!-- leer lassen -->
       </div>
 
-
       <div class="filter-buttons">
         <button class="filter-btn active" data-filter="all">Alle</button>
         <button class="filter-btn" data-filter="attack">Attack</button>
@@ -96,8 +95,8 @@
     <p>© 2025 vyensa.ch</p>
   </footer>
 
+  <script src="data.js"></script> <!-- Hier binden wir die data.js ein -->
   <script>
-    let data = {};
     let currentAgent = '';
     let currentMap = 'ascent';
     let currentFilter = 'all';
@@ -124,35 +123,28 @@
     const mapSelect = document.getElementById('map-select');
     const lineupSearchInput = document.getElementById('lineup-search');
 
+    // Da data.js bereits das data-Objekt bereitstellt, können wir das direkt verwenden.
+    populateMapSelect();
+    renderAgentGrid();
+    currentAgent = Object.keys(data.agents)[0];
+    renderPage();
 
-
-    fetch('data.json')
-      .then(res => res.json())
-      .then(json => {
-        data = json;
-        populateMapSelect();
-        renderAgentGrid();
-        currentAgent = Object.keys(data.agents)[0];
-        renderPage();
+    function populateMapSelect() {
+      mapSelect.innerHTML = '';
+      Object.keys(data.maps).forEach(mapKey => {
+        const option = document.createElement('option');
+        option.value = mapKey;
+        option.textContent = capitalize(mapKey);
+        mapSelect.appendChild(option);
       });
-
-      function populateMapSelect() {
-        mapSelect.innerHTML = '';
-        Object.keys(data.maps).forEach(mapKey => {
-          const option = document.createElement('option');
-          option.value = mapKey;
-          option.textContent = capitalize(mapKey);
-          mapSelect.appendChild(option);
-        });
-        mapSelect.value = currentMap; // setze den aktuellen Wert
-      }
-
+      mapSelect.value = currentMap; // setze den aktuellen Wert
+    }
 
     function renderAgentGrid() {
       agentGrid.innerHTML = '';
       Object.entries(data.agents).forEach(([agentKey, agent]) => {
         const img = document.createElement('img');
-        img.src = agent.image; // Agent image aus dem JSON laden
+        img.src = agent.image;
         img.alt = agentKey;
         img.className = 'agent';
         img.dataset.agent = agentKey;
@@ -184,7 +176,6 @@
       attackSmokes.innerHTML = '';
       defendSmokes.innerHTML = '';
 
-      // Angriff-Smokes anzeigen
       mapData.attackSmokes.forEach(smoke => {
         const img = document.createElement('img');
         img.src = smoke.image;
@@ -195,7 +186,6 @@
         attackSmokes.appendChild(img);
       });
 
-      // Verteidigungs-Smokes anzeigen
       mapData.defendSmokes.forEach(smoke => {
         const img = document.createElement('img');
         img.src = smoke.image;
@@ -206,7 +196,6 @@
         defendSmokes.appendChild(img);
       });
     }
-
 
     function updateAgentInfo() {
       const agent = data.agents[currentAgent];
