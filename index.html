@@ -25,7 +25,7 @@
         <button class="filter-btn" data-filter="attack">Attack</button>
         <button class="filter-btn" data-filter="defend">Defend</button>
       </div>
-
+      <br>
       <h3>Agenten</h3>
       <div class="agent-grid" id="agent-grid"></div>
     </aside>
@@ -57,7 +57,7 @@
         <h2>Agenten Guide: <span id="agent-name"></span></h2>
         <p id="agent-description"></p>
       </section>
-
+      <br>
       <input
         type="text"
         id="lineup-search"
@@ -89,7 +89,6 @@
       <img id="smoke-modal-image" class="smoke-modal-image" />
     </div>
   </div>
-
 
   <footer>
     <p>© 2025 vyensa.ch</p>
@@ -170,8 +169,17 @@
     function updateMapInfos() {
       const mapData = data.maps[currentMap];
       mapTitle.textContent = capitalize(currentMap);
-      attackInfo.textContent = mapData.attackInfo;
-      defendInfo.textContent = mapData.defendInfo;
+
+      // Hinzufügen von <ul> für Listenstruktur
+      attackInfo.innerHTML = `<ul>` + mapData.attackInfo
+        .split('\n')
+        .map(line => `<li>${line}</li>`)
+        .join('') + `</ul>`;
+
+      defendInfo.innerHTML = `<ul>` + mapData.defendInfo
+        .split('\n')
+        .map(line => `<li>${line}</li>`)
+        .join('') + `</ul>`;
 
       attackSmokes.innerHTML = '';
       defendSmokes.innerHTML = '';
@@ -196,6 +204,7 @@
         defendSmokes.appendChild(img);
       });
     }
+
 
     function updateAgentInfo() {
       const agent = data.agents[currentAgent];
@@ -283,6 +292,7 @@
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
+
   </script>
 </body>
 </html>
