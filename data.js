@@ -68,7 +68,19 @@ const data = {
       "kayo": {
         "description": "Infos folgen.",
         "image": "images/agents/kayo.png",
-        "lineups": []
+        "lineups": [
+          {
+            "title": "Early Flash | Flash | To A Root | From A Main (Spawn Barrier)",
+            "titleImage": "images/lineups/kayo/lotus/defense-a-root-flash-main-1.png",
+            "images": [
+              "images/lineups/kayo/lotus/defense-a-root-flash-main-2.png",
+              "images/lineups/kayo/lotus/defense-a-root-flash-main-3.png"
+            ],
+            "description": "-",
+            "side": "defense",
+            "map": "lotus"
+          }
+        ]
       },
       "neon": {
         "description": "Infos folgen. Tipps hier hinzufügen.",
@@ -376,6 +388,16 @@ const data = {
               "images/lineups/sova/haven/defense-a-retake-link-2.png"
             ],
             "description": "No Bounce, Full Charge",
+            "side": "defense",
+            "map": "haven"
+          },
+          {
+            "title": "Early Info | Recon Bolt | To C Main | From A Site",
+            "titleImage": "images/lineups/sova/haven/defense-c-main-recon-from-a-1.png",
+            "images": [
+              "images/lineups/sova/haven/defense-c-main-recon-from-a-2.png"
+            ],
+            "description": "1 Bounce, Full Charge",
             "side": "defense",
             "map": "haven"
           },
