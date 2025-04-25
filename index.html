@@ -26,10 +26,10 @@
         <button class="filter-btn" data-filter="defend">Defend</button>
       </div>
       <br>
-      <h3>Agenten mit Lineups</h3>
+      <h3>Agenten</h3>
       <div class="agent-grid" id="agent-grid-with-lineups"></div>
       <br>
-      <h3>Agenten ohne Lineups</h3>
+      <hr>
       <div class="agent-grid" id="agent-grid-without-lineups"></div>
 
       <div class="sidebar-footer">
@@ -106,277 +106,277 @@
   <script src="data.js"></script>
   <script>
     let currentAgent = '';
-let currentMap = 'ascent';
-let currentFilter = 'all';
+    let currentMap = 'ascent';
+    let currentFilter = 'all';
 
-const agentGridWithLineups = document.getElementById('agent-grid-with-lineups');
-const agentGridWithoutLineups = document.getElementById('agent-grid-without-lineups');
-const mapTitle = document.getElementById('map-title');
-const attackInfo = document.getElementById('attack-info');
-const defendInfo = document.getElementById('defend-info');
-const attackSmokes = document.getElementById('attack-smokes');
-const defendSmokes = document.getElementById('defend-smokes');
-const agentDescription = document.getElementById('agent-description');
-const agentNameSpan = document.getElementById('agent-name');
-const lineupAgentName = document.getElementById('lineup-agent-name');
-const lineupGrid = document.getElementById('lineup-grid');
-const modal = document.getElementById('lineup-modal');
-const closeModalBtn = document.querySelector('.close-btn');
-const modalTitle = document.getElementById('modal-title');
-const modalDescription = document.getElementById('lineup-description');
-const modalImages = document.getElementById('lineup-images');
-const smokeModal = document.getElementById('smoke-modal');
-const closeSmokeModalBtn = document.getElementById('close-smoke-modal');
-const smokeModalTitle = document.getElementById('smoke-modal-title');
-const smokeModalImage = document.getElementById('smoke-modal-image');
-const mapSelect = document.getElementById('map-select');
-const lineupSearchInput = document.getElementById('lineup-search');
+    const agentGridWithLineups = document.getElementById('agent-grid-with-lineups');
+    const agentGridWithoutLineups = document.getElementById('agent-grid-without-lineups');
+    const mapTitle = document.getElementById('map-title');
+    const attackInfo = document.getElementById('attack-info');
+    const defendInfo = document.getElementById('defend-info');
+    const attackSmokes = document.getElementById('attack-smokes');
+    const defendSmokes = document.getElementById('defend-smokes');
+    const agentDescription = document.getElementById('agent-description');
+    const agentNameSpan = document.getElementById('agent-name');
+    const lineupAgentName = document.getElementById('lineup-agent-name');
+    const lineupGrid = document.getElementById('lineup-grid');
+    const modal = document.getElementById('lineup-modal');
+    const closeModalBtn = document.querySelector('.close-btn');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('lineup-description');
+    const modalImages = document.getElementById('lineup-images');
+    const smokeModal = document.getElementById('smoke-modal');
+    const closeSmokeModalBtn = document.getElementById('close-smoke-modal');
+    const smokeModalTitle = document.getElementById('smoke-modal-title');
+    const smokeModalImage = document.getElementById('smoke-modal-image');
+    const mapSelect = document.getElementById('map-select');
+    const lineupSearchInput = document.getElementById('lineup-search');
 
-populateMapSelect();
-renderAgentsWithLineups();
-renderAgentsWithoutLineups();
+    populateMapSelect();
+    renderAgentsWithLineups();
+    renderAgentsWithoutLineups();
 
-function populateMapSelect() {
-  mapSelect.innerHTML = '';
-  Object.keys(data.maps).forEach(mapKey => {
-    const option = document.createElement('option');
-    option.value = mapKey;
-    option.textContent = capitalize(mapKey);
-    mapSelect.appendChild(option);
-  });
-  mapSelect.value = currentMap;
-}
-
-function renderAgentsWithLineups() {
-  agentGridWithLineups.innerHTML = ''; // Vorherige Agenten leeren
-
-  const agentsWithLineups = [];
-
-  // Gehe durch alle Agenten
-  Object.entries(data.agents).forEach(([agentKey, agent]) => {
-    // Wenn der Agent mindestens ein Lineup hat, füge ihn zur Liste hinzu
-    if (agent.lineups && agent.lineups.length > 0) {
-      agentsWithLineups.push({ key: agentKey, ...agent });
-    }
-  });
-
-  // Agenten mit Lineups anzeigen
-  agentsWithLineups.forEach(agent => {
-    const img = document.createElement('img');
-    img.src = agent.image;
-    img.alt = agent.key;
-    img.className = 'agent';
-    img.dataset.agent = agent.key;
-
-    // Wenn der Agent der aktuelle Agent ist, füge die "active"-Klasse hinzu
-    if (agent.key === currentAgent) img.classList.add('active');
-
-    // Event-Listener für das Bild hinzufügen
-    img.addEventListener('click', function() {
-      currentAgent = agent.key;  // Setze den aktuellen Agenten
-      renderPage();  // Seite neu rendern (Agenteninfo etc.)
-      updateActiveAgent();  // Stelle sicher, dass das Bild als aktiv markiert wird
-    });
-
-    agentGridWithLineups.appendChild(img);
-  });
-
-  // Wenn keine Agenten mit Lineups vorhanden sind, zeige eine Nachricht an
-  if (agentsWithLineups.length === 0) {
-    const label = document.createElement('div');
-    label.className = 'no-lineups-title';
-    label.textContent = 'Keine Lineups verfügbar';
-    agentGridWithLineups.appendChild(label);
-  }
-}
-
-function renderAgentsWithoutLineups() {
-  agentGridWithoutLineups.innerHTML = ''; // Vorherige Agenten leeren
-
-  const agentsWithoutLineups = [];
-
-  // Gehe durch alle Agenten
-  Object.entries(data.agents).forEach(([agentKey, agent]) => {
-    // Wenn der Agent keine Lineups hat, füge ihn zur Liste hinzu
-    if (!agent.lineups || agent.lineups.length === 0) {
-      agentsWithoutLineups.push({ key: agentKey, ...agent });
-    }
-  });
-
-  // Agenten ohne Lineups anzeigen
-  agentsWithoutLineups.forEach(agent => {
-    const img = document.createElement('img');
-    img.src = agent.image;
-    img.alt = agent.key;
-    img.className = 'agent no-lineups';
-    img.dataset.agent = agent.key;
-
-    // Event-Listener für das Bild hinzufügen
-    img.addEventListener('click', function() {
-      currentAgent = agent.key;  // Setze den aktuellen Agenten
-      renderPage();  // Seite neu rendern (Agenteninfo etc.)
-      updateActiveAgent();  // Stelle sicher, dass das Bild als aktiv markiert wird
-    });
-
-    agentGridWithoutLineups.appendChild(img);
-  });
-
-  // Wenn keine Agenten ohne Lineups vorhanden sind, zeige eine Nachricht an
-  if (agentsWithoutLineups.length === 0) {
-    const label = document.createElement('div');
-    label.className = 'no-lineups-title';
-    label.textContent = 'Alle Agenten haben Lineups';
-    agentGridWithoutLineups.appendChild(label);
-  }
-}
-
-// Diese Funktion sorgt dafür, dass das aktuell ausgewählte Agentenbild als "aktiv" markiert wird
-function updateActiveAgent() {
-  const agentImages = document.querySelectorAll('.agent');
-  agentImages.forEach(img => {
-    if (img.dataset.agent === currentAgent) {
-      img.classList.add('active');  // Markiere als aktiv
-    } else {
-      img.classList.remove('active');  // Entferne die "aktive" Markierung von anderen
-    }
-  });
-}
-
-// Nach dem Laden der Seite den aktuellen Agenten als aktiv setzen
-updateActiveAgent();
-
-function renderPage() {
-  updateMapInfos();
-  updateAgentInfo();
-  renderLineups();
-  renderAgentsWithLineups();
-  renderAgentsWithoutLineups();
-}
-
-function updateMapInfos() {
-  const mapData = data.maps[currentMap];
-  mapTitle.textContent = capitalize(currentMap);
-
-  attackInfo.innerHTML = `<ul>` + mapData.attackInfo
-    .split('\n')
-    .map(line => `<li>${line}</li>`)
-    .join('') + `</ul>`;
-
-  defendInfo.innerHTML = `<ul>` + mapData.defendInfo
-    .split('\n')
-    .map(line => `<li>${line}</li>`)
-    .join('') + `</ul>`;
-
-  attackSmokes.innerHTML = '';
-  defendSmokes.innerHTML = '';
-
-  mapData.attackSmokes.forEach(smoke => {
-    const img = document.createElement('img');
-    img.src = smoke.image;
-    img.alt = smoke.title;
-    img.title = smoke.title;
-    img.className = 'smoke-image';
-    img.addEventListener('click', () => openSmokeModal(smoke));
-    attackSmokes.appendChild(img);
-  });
-
-  mapData.defendSmokes.forEach(smoke => {
-    const img = document.createElement('img');
-    img.src = smoke.image;
-    img.alt = smoke.title;
-    img.title = smoke.title;
-    img.className = 'smoke-image';
-    img.addEventListener('click', () => openSmokeModal(smoke));
-    defendSmokes.appendChild(img);
-  });
-}
-
-function updateAgentInfo() {
-  const agent = data.agents[currentAgent];
-  agentDescription.textContent = agent.description;
-  agentNameSpan.textContent = capitalize(currentAgent);
-  lineupAgentName.textContent = capitalize(currentAgent);
-}
-
-function renderLineups() {
-  const agent = data.agents[currentAgent];
-  const searchTerm = lineupSearchInput.value.toLowerCase();
-  lineupGrid.innerHTML = '';
-
-  agent.lineups.forEach(lineup => {
-    const matchesFilter = currentFilter === 'all' || currentFilter === lineup.side;
-    const matchesMap = lineup.map === currentMap;
-    const matchesSearch = lineup.title.toLowerCase().includes(searchTerm);
-
-    if (matchesFilter && matchesMap && matchesSearch) {
-      const card = document.createElement('div');
-      card.className = 'lineup-card';
-      card.innerHTML = `
-        <img src="${lineup.titleImage}" alt="${lineup.title}" />
-        <button>${lineup.title}</button>
-      `;
-      card.querySelector('button').addEventListener('click', () => {
-        modalTitle.textContent = lineup.title;
-        modalDescription.textContent = lineup.description;
-        modalImages.innerHTML = '';
-        lineup.images.forEach(img => {
-          const image = document.createElement('img');
-          image.src = img;
-          image.className = 'lineup-image';
-          modalImages.appendChild(image);
-        });
-        modal.style.display = 'flex';
+    function populateMapSelect() {
+      mapSelect.innerHTML = '';
+      Object.keys(data.maps).forEach(mapKey => {
+        const option = document.createElement('option');
+        option.value = mapKey;
+        option.textContent = capitalize(mapKey);
+        mapSelect.appendChild(option);
       });
-      lineupGrid.appendChild(card);
+      mapSelect.value = currentMap;
     }
-  });
-}
 
-lineupSearchInput.addEventListener('input', renderLineups);
+    function renderAgentsWithLineups() {
+      agentGridWithLineups.innerHTML = ''; // Vorherige Agenten leeren
 
-closeModalBtn.addEventListener('click', () => {
-  modal.style.display = 'none';
-});
+      const agentsWithLineups = [];
 
-window.addEventListener('click', e => {
-  if (e.target === modal) {
-    modal.style.display = 'none';
-  }
-});
+      // Gehe durch alle Agenten
+      Object.entries(data.agents).forEach(([agentKey, agent]) => {
+        // Wenn der Agent mindestens ein Lineup hat, füge ihn zur Liste hinzu
+        if (agent.lineups && agent.lineups.length > 0) {
+          agentsWithLineups.push({ key: agentKey, ...agent });
+        }
+      });
 
-function openSmokeModal(smoke) {
-  smokeModalTitle.textContent = smoke.title;
-  smokeModalImage.src = smoke.image;
-  smokeModal.style.display = 'flex';
-}
+      // Agenten mit Lineups anzeigen
+      agentsWithLineups.forEach(agent => {
+        const img = document.createElement('img');
+        img.src = agent.image;
+        img.alt = agent.key;
+        img.className = 'agent';
+        img.dataset.agent = agent.key;
 
-closeSmokeModalBtn.addEventListener('click', () => {
-  smokeModal.style.display = 'none';
-});
+        // Wenn der Agent der aktuelle Agent ist, füge die "active"-Klasse hinzu
+        if (agent.key === currentAgent) img.classList.add('active');
 
-window.addEventListener('click', (e) => {
-  if (e.target === smokeModal) {
-    smokeModal.style.display = 'none';
-  }
-});
+        // Event-Listener für das Bild hinzufügen
+        img.addEventListener('click', function() {
+          currentAgent = agent.key;  // Setze den aktuellen Agenten
+          renderPage();  // Seite neu rendern (Agenteninfo etc.)
+          updateActiveAgent();  // Stelle sicher, dass das Bild als aktiv markiert wird
+        });
 
-document.getElementById('map-select').addEventListener('change', (e) => {
-  currentMap = e.target.value;
-  renderPage();
-});
+        agentGridWithLineups.appendChild(img);
+      });
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentFilter = btn.dataset.filter;
-    renderLineups();
-  });
-});
+      // Wenn keine Agenten mit Lineups vorhanden sind, zeige eine Nachricht an
+      if (agentsWithLineups.length === 0) {
+        const label = document.createElement('div');
+        label.className = 'no-lineups-title';
+        label.textContent = 'Keine Lineups verfügbar';
+        agentGridWithLineups.appendChild(label);
+      }
+    }
 
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+    function renderAgentsWithoutLineups() {
+      agentGridWithoutLineups.innerHTML = ''; // Vorherige Agenten leeren
+
+      const agentsWithoutLineups = [];
+
+      // Gehe durch alle Agenten
+      Object.entries(data.agents).forEach(([agentKey, agent]) => {
+        // Wenn der Agent keine Lineups hat, füge ihn zur Liste hinzu
+        if (!agent.lineups || agent.lineups.length === 0) {
+          agentsWithoutLineups.push({ key: agentKey, ...agent });
+        }
+      });
+
+      // Agenten ohne Lineups anzeigen
+      agentsWithoutLineups.forEach(agent => {
+        const img = document.createElement('img');
+        img.src = agent.image;
+        img.alt = agent.key;
+        img.className = 'agent no-lineups';
+        img.dataset.agent = agent.key;
+
+        // Event-Listener für das Bild hinzufügen
+        img.addEventListener('click', function() {
+          currentAgent = agent.key;  // Setze den aktuellen Agenten
+          renderPage();  // Seite neu rendern (Agenteninfo etc.)
+          updateActiveAgent();  // Stelle sicher, dass das Bild als aktiv markiert wird
+        });
+
+        agentGridWithoutLineups.appendChild(img);
+      });
+
+      // Wenn keine Agenten ohne Lineups vorhanden sind, zeige eine Nachricht an
+      if (agentsWithoutLineups.length === 0) {
+        const label = document.createElement('div');
+        label.className = 'no-lineups-title';
+        label.textContent = 'Alle Agenten haben Lineups';
+        agentGridWithoutLineups.appendChild(label);
+      }
+    }
+
+    // Diese Funktion sorgt dafür, dass das aktuell ausgewählte Agentenbild als "aktiv" markiert wird
+    function updateActiveAgent() {
+      const agentImages = document.querySelectorAll('.agent');
+      agentImages.forEach(img => {
+        if (img.dataset.agent === currentAgent) {
+          img.classList.add('active');  // Markiere als aktiv
+        } else {
+          img.classList.remove('active');  // Entferne die "aktive" Markierung von anderen
+        }
+      });
+    }
+
+    // Nach dem Laden der Seite den aktuellen Agenten als aktiv setzen
+    updateActiveAgent();
+
+    function renderPage() {
+      updateMapInfos();
+      updateAgentInfo();
+      renderLineups();
+      renderAgentsWithLineups();
+      renderAgentsWithoutLineups();
+    }
+
+    function updateMapInfos() {
+      const mapData = data.maps[currentMap];
+      mapTitle.textContent = capitalize(currentMap);
+
+      attackInfo.innerHTML = `<ul>` + mapData.attackInfo
+        .split('\n')
+        .map(line => `<li>${line}</li>`)
+        .join('') + `</ul>`;
+
+      defendInfo.innerHTML = `<ul>` + mapData.defendInfo
+        .split('\n')
+        .map(line => `<li>${line}</li>`)
+        .join('') + `</ul>`;
+
+      attackSmokes.innerHTML = '';
+      defendSmokes.innerHTML = '';
+
+      mapData.attackSmokes.forEach(smoke => {
+        const img = document.createElement('img');
+        img.src = smoke.image;
+        img.alt = smoke.title;
+        img.title = smoke.title;
+        img.className = 'smoke-image';
+        img.addEventListener('click', () => openSmokeModal(smoke));
+        attackSmokes.appendChild(img);
+      });
+
+      mapData.defendSmokes.forEach(smoke => {
+        const img = document.createElement('img');
+        img.src = smoke.image;
+        img.alt = smoke.title;
+        img.title = smoke.title;
+        img.className = 'smoke-image';
+        img.addEventListener('click', () => openSmokeModal(smoke));
+        defendSmokes.appendChild(img);
+      });
+    }
+
+    function updateAgentInfo() {
+      const agent = data.agents[currentAgent];
+      agentDescription.textContent = agent.description;
+      agentNameSpan.textContent = capitalize(currentAgent);
+      lineupAgentName.textContent = capitalize(currentAgent);
+    }
+
+    function renderLineups() {
+      const agent = data.agents[currentAgent];
+      const searchTerm = lineupSearchInput.value.toLowerCase();
+      lineupGrid.innerHTML = '';
+
+      agent.lineups.forEach(lineup => {
+        const matchesFilter = currentFilter === 'all' || currentFilter === lineup.side;
+        const matchesMap = lineup.map === currentMap;
+        const matchesSearch = lineup.title.toLowerCase().includes(searchTerm);
+
+        if (matchesFilter && matchesMap && matchesSearch) {
+          const card = document.createElement('div');
+          card.className = 'lineup-card';
+          card.innerHTML = `
+            <img src="${lineup.titleImage}" alt="${lineup.title}" />
+            <button>${lineup.title}</button>
+          `;
+          card.querySelector('button').addEventListener('click', () => {
+            modalTitle.textContent = lineup.title;
+            modalDescription.textContent = lineup.description;
+            modalImages.innerHTML = '';
+            lineup.images.forEach(img => {
+              const image = document.createElement('img');
+              image.src = img;
+              image.className = 'lineup-image';
+              modalImages.appendChild(image);
+            });
+            modal.style.display = 'flex';
+          });
+          lineupGrid.appendChild(card);
+        }
+      });
+    }
+
+    lineupSearchInput.addEventListener('input', renderLineups);
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    function openSmokeModal(smoke) {
+      smokeModalTitle.textContent = smoke.title;
+      smokeModalImage.src = smoke.image;
+      smokeModal.style.display = 'flex';
+    }
+
+    closeSmokeModalBtn.addEventListener('click', () => {
+      smokeModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === smokeModal) {
+        smokeModal.style.display = 'none';
+      }
+    });
+
+    document.getElementById('map-select').addEventListener('change', (e) => {
+      currentMap = e.target.value;
+      renderPage();
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderLineups();
+      });
+    });
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 
   </script>
 </body>
