@@ -1,334 +1,369 @@
 /* Body */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #121212;
-    color: #e0e0e0;
-    opacity: 0;
-    animation: fadeIn 0.5s forwards; /* Fade-In-Animation beim Laden */
-  }
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: #e0e0e0;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards; /* Fade-In-Animation beim Laden */
+}
 
 @keyframes fadeIn {
-  to {
+to {
+  opacity: 1;
+}
+}
+
+
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  background: #1c1c1c;
+  padding: 1rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: auto; /* Falls der Inhalt zu lang ist, scrollen */
+}
+
+.sidebar h2, .sidebar h3 {
+  color: #ff4655;
+  margin-top: 0;
+}
+
+.sidebar select, .filter-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Dropdown */
+.dropdown select {
+  width: 100%;
+  padding: 0.8rem;
+  background: #333;
+  color: white;
+  border: 1px solid #ff4655;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.dropdown select:focus {
+  border-color: #ff4655;
+}
+
+/* Filter Buttons */
+.filter-buttons {
+  margin-top: 1rem;
+}
+
+.filter-btn {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  background: #2b2b2b;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s ease; /* sanfte Übergangsanimation */
+}
+
+.filter-btn.active {
+  background: #ff4655;
+  transform: scale(1.05); /* Kleine Vergrößerung für die aktive Schaltfläche */
+}
+
+.filter-btn:hover {
+  background: #ff4655;
+  transform: scale(1.1); /* Schaltfläche wird leicht vergrößert beim Hover */
+}
+
+/* Agent Grid */
+.agent-grid {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.agent {
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.2s ease, transform 0.3s ease;
+}
+
+.agent:hover {
+  border-color: #ff4655;
+  transform: scale(1.05); /* Kleine Vergrößerung beim Hover */
+}
+
+/* Content */
+.content {
+  margin-left: 314px;
+  margin-right: 32px;
+  flex: 1;
+
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+#map-title {
+  font-size: 2rem;
+}
+
+.map-img {
+  width: 200px;
+  border-radius: 12px;
+  border: 2px solid #333;
+}
+
+.map-section {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.map-section img {
+  height: 150px;
+  width: auto;
+  padding: 5px;
+  border-radius: 18px;
+}
+
+.map-block {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 12px;
+  flex: 1;
+}
+
+.smoke-image {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+  transition: transform 0.3s ease; /* sanfte Bild-Animation */
+}
+
+.smoke-image:hover {
+  transform: scale(1.05); /* Leichtes Vergrößern der Bilder beim Hover */
+}
+
+/* Lineup Grid */
+.lineup-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.lineup-card {
+  background: #1c1c1c;
+  padding: 1rem;
+  border-radius: 12px;
+  width: calc(33% - 1rem);
+}
+
+.lineup-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.lineup-card button {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  background: #ff4655;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* sanfte Skalierung */
+}
+
+.lineup-card button:hover {
+  transform: scale(1.05); /* Button wird leicht vergrößert */
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0);
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Startzustand */
+  animation: fadeInModal 0.3s forwards, zoomInModal 0.3s ease-out forwards; /* Fade-in und Zoom-in beim Öffnen */
+}
+
+.modal.open {
+  display: flex;
+  opacity: 1; /* Modal wird sichtbar */
+}
+
+@keyframes fadeInModal {
+  0% {
+    opacity: 0;
+  }
+  100% {
     opacity: 1;
   }
 }
 
-
-  .container {
-    display: flex;
+@keyframes fadeInContent {
+  0% {
+    opacity: 0;
   }
-
-  .sidebar {
-    width: 150px;
-    background: #1c1c1c;
-    padding: 1rem;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-    overflow-y: auto; /* Falls der Inhalt zu lang ist, scrollen */
+  100% {
+    opacity: 1;
   }
+}
 
-  .sidebar h2, .sidebar h3 {
-    color: #ff4655;
-    margin-top: 0;
+@keyframes zoomInModal {
+  0% {
+    transform: scale(0.8);
   }
-
-  .sidebar select, .filter-btn {
-    width: 100%;
-    margin-top: 0.5rem;
+  100% {
+    transform: scale(1);
   }
+}
 
-  /* Dropdown */
-  .dropdown select {
-    width: 100%;
-    padding: 0.8rem;
-    background: #333;
-    color: white;
-    border: 1px solid #ff4655;
-    border-radius: 8px;
-    font-size: 1rem;
-    outline: none;
-    cursor: pointer;
+@keyframes zoomInContent {
+  0% {
+    transform: scale(0.9);
   }
-
-  .dropdown select:focus {
-    border-color: #ff4655;
+  100% {
+    transform: scale(1);
   }
+}
 
-  /* Filter Buttons */
-  .filter-buttons {
-    margin-top: 1rem;
-  }
+.modal-content {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%;
+  max-height: 90%;
+  text-align: center;
+  color: white;
+  position: relative;
+  transition: transform 0.3s ease-in-out; /* sanfte Skalierung */
 
-  .filter-btn {
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    background: #2b2b2b;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.3s ease; /* sanfte Übergangsanimation */
-  }
+}
 
-  .filter-btn.active {
-    background: #ff4655;
-    transform: scale(1.05); /* Kleine Vergrößerung für die aktive Schaltfläche */
-  }
+.modal.open .modal-content {
+  transform: scale(1); /* Modal wird normal skaliert */
+}
 
-  .filter-btn:hover {
-    background: #ff4655;
-    transform: scale(1.1); /* Schaltfläche wird leicht vergrößert beim Hover */
-  }
+.smoke-modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  margin-top: 15px;
+  border-radius: 10px;
+}
 
-  /* Agent Grid */
-  .agent-grid {
-    display: grid;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    grid-template-columns: repeat(2, 1fr);
-  }
+.close-btn {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
 
-  .agent {
-    width: 100%;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: border 0.2s ease, transform 0.3s ease;
-  }
+/* Header */
+.header {
+  background: #121212;
+  padding: 1rem;
+  text-align: center;
+}
 
-  .agent:hover {
-    border-color: #ff4655;
-    transform: scale(1.05); /* Kleine Vergrößerung beim Hover */
-  }
+.header h1 {
+  color: #ff4655;
+  font-size: 2.5rem;
+}
 
-  /* Content */
-  .content {
-    margin-left: 214px;
-    flex: 1;
-  }
+/* Sidebar - Aktuellen Agenten hervorheben */
+.agent.active {
+  border: 2px solid #ff0000; /* Rote Umrandung für den aktiven Agenten */
+  transition: border-color 0.3s ease;
+}
 
-  .map-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
+/* Box für den Agenten-Guide */
+#agent-guide {
+  background-color: #1c1c1c;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 2rem;
+}
 
-  #map-title {
-    font-size: 2rem;
-  }
+#agent-guide h2 {
+  font-size: 2rem;
+  color: #ff4655;
+}
 
-  .map-img {
-    width: 200px;
-    border-radius: 12px;
-    border: 2px solid #333;
-  }
+#agent-guide p {
+  font-size: 1rem;
+  color: #e0e0e0;
+}
 
-  .map-section {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
+/* Lineup Grid für Agenten */
+#lineup-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
 
-  .map-section img {
-    height: 150px;
-    width: auto;
-    padding: 5px;
-    border-radius: 18px;
-  }
+.lineup-search {
+  width: 25%;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
 
-  .map-block {
-    background: #1e1e1e;
-    padding: 1rem;
-    border-radius: 12px;
-    flex: 1;
-  }
 
-  .smoke-image {
-    width: 100%;
-    border-radius: 10px;
-    margin-top: 0.5rem;
-    transition: transform 0.3s ease; /* sanfte Bild-Animation */
-  }
+/* Grid für Agenten mit Lineups */
+.agent-grid.with-lineups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 Spalten */
+  gap: 1rem;
+  margin-bottom: 2rem; /* Abstand zum Divider */
+}
 
-  .smoke-image:hover {
-    transform: scale(1.05); /* Leichtes Vergrößern der Bilder beim Hover */
-  }
+/* Grid für Agenten ohne Lineups */
+.agent-grid.without-lineups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 Spalten */
+  gap: 1rem;
+}
 
-  /* Lineup Grid */
-  .lineup-grid {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-  }
+/* Divider zwischen den beiden Grids */
+.divider {
+  width: 100%;
+  height: 2px;
+  background-color: #555;
+  margin: 1rem 0; /* Abstand oben und unten */
+}
 
-  .lineup-card {
-    background: #1c1c1c;
-    padding: 1rem;
-    border-radius: 12px;
-    width: calc(33% - 1rem);
-  }
-
-  .lineup-card img {
-    width: 100%;
-    border-radius: 10px;
-  }
-
-  .lineup-card button {
-    margin-top: 0.5rem;
-    width: 100%;
-    padding: 0.5rem;
-    background: #ff4655;
-    border: none;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s ease; /* sanfte Skalierung */
-  }
-
-  .lineup-card button:hover {
-    transform: scale(1.05); /* Button wird leicht vergrößert */
-  }
-
-  /* Modal */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0);
-    justify-content: center;
-    align-items: center;
-    opacity: 0; /* Startzustand */
-    animation: fadeInModal 0.3s forwards, zoomInModal 0.3s ease-out forwards; /* Fade-in und Zoom-in beim Öffnen */
-  }
-
-  .modal.open {
-    display: flex;
-    opacity: 1; /* Modal wird sichtbar */
-  }
-
-  @keyframes fadeInModal {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes fadeInContent {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes zoomInModal {
-    0% {
-      transform: scale(0.8);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  @keyframes zoomInContent {
-    0% {
-      transform: scale(0.9);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  .modal-content {
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 90%;
-    max-height: 90%;
-    text-align: center;
-    color: white;
-    position: relative;
-    transition: transform 0.3s ease-in-out; /* sanfte Skalierung */
-
-  }
-
-  .modal.open .modal-content {
-    transform: scale(1); /* Modal wird normal skaliert */
-  }
-
-  .smoke-modal-image {
-    max-width: 100%;
-    max-height: 70vh;
-    margin-top: 15px;
-    border-radius: 10px;
-  }
-
-  .close-btn {
-    float: right;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-
-  /* Header */
-  .header {
-    background: #121212;
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .header h1 {
-    color: #ff4655;
-    font-size: 2.5rem;
-  }
-
-  /* Sidebar - Aktuellen Agenten hervorheben */
-  .agent.active {
-    border: 2px solid #ff0000; /* Rote Umrandung für den aktiven Agenten */
-    transition: border-color 0.3s ease;
-  }
-
-  /* Box für den Agenten-Guide */
-  #agent-guide {
-    background-color: #1c1c1c;
-    padding: 1.5rem;
-    border-radius: 12px;
-    margin-top: 2rem;
-  }
-
-  #agent-guide h2 {
-    font-size: 2rem;
-    color: #ff4655;
-  }
-
-  #agent-guide p {
-    font-size: 1rem;
-    color: #e0e0e0;
-  }
-
-  /* Lineup Grid für Agenten */
-  #lineup-grid {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-  }
-
-  .lineup-search {
-    width: 25%;
-    padding: 0.5rem 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
+/* Optional: Titel für Agenten ohne Lineups */
+.no-lineups-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #888;
+  text-align: center;
+  margin-bottom: 1rem;
+}
