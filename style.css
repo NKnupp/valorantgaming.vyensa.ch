@@ -4,7 +4,16 @@ body {
     font-family: Arial, sans-serif;
     background: #121212;
     color: #e0e0e0;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards; /* Fade-In-Animation beim Laden */
   }
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
 
   .container {
     display: flex;
@@ -62,10 +71,17 @@ body {
     color: white;
     cursor: pointer;
     border-radius: 8px;
+    transition: background 0.3s ease; /* sanfte Übergangsanimation */
   }
 
   .filter-btn.active {
     background: #ff4655;
+    transform: scale(1.05); /* Kleine Vergrößerung für die aktive Schaltfläche */
+  }
+
+  .filter-btn:hover {
+    background: #ff4655;
+    transform: scale(1.1); /* Schaltfläche wird leicht vergrößert beim Hover */
   }
 
   /* Agent Grid */
@@ -81,12 +97,12 @@ body {
     border-radius: 8px;
     cursor: pointer;
     border: 2px solid transparent;
-    transition: border 0.2s;
+    transition: border 0.2s ease, transform 0.3s ease;
   }
 
   .agent:hover {
     border-color: #ff4655;
-    border: 1px;
+    transform: scale(1.05); /* Kleine Vergrößerung beim Hover */
   }
 
   /* Content */
@@ -136,6 +152,11 @@ body {
     width: 100%;
     border-radius: 10px;
     margin-top: 0.5rem;
+    transition: transform 0.3s ease; /* sanfte Bild-Animation */
+  }
+
+  .smoke-image:hover {
+    transform: scale(1.05); /* Leichtes Vergrößern der Bilder beim Hover */
   }
 
   /* Lineup Grid */
@@ -167,6 +188,11 @@ body {
     color: white;
     border-radius: 8px;
     cursor: pointer;
+    transition: transform 0.3s ease; /* sanfte Skalierung */
+  }
+
+  .lineup-card button:hover {
+    transform: scale(1.05); /* Button wird leicht vergrößert */
   }
 
   /* Modal */
@@ -176,9 +202,52 @@ body {
     z-index: 999;
     left: 0; top: 0;
     width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0);
     justify-content: center;
     align-items: center;
+    opacity: 0; /* Startzustand */
+    animation: fadeInModal 0.3s forwards, zoomInModal 0.3s ease-out forwards; /* Fade-in und Zoom-in beim Öffnen */
+  }
+
+  .modal.open {
+    display: flex;
+    opacity: 1; /* Modal wird sichtbar */
+  }
+
+  @keyframes fadeInModal {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInContent {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes zoomInModal {
+    0% {
+      transform: scale(0.8);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes zoomInContent {
+    0% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 
   .modal-content {
@@ -190,6 +259,12 @@ body {
     text-align: center;
     color: white;
     position: relative;
+    transition: transform 0.3s ease-in-out; /* sanfte Skalierung */
+
+  }
+
+  .modal.open .modal-content {
+    transform: scale(1); /* Modal wird normal skaliert */
   }
 
   .smoke-modal-image {
