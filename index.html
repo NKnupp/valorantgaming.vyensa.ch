@@ -17,12 +17,9 @@
 
       <label for="map-select">Map auswählen:</label>
       <div class="dropdown">
-        <select id="map-select">
-          <option value="ascent">Ascent</option>
-          <option value="bind">Bind</option>
-          <option value="haven">Haven</option>
-        </select>
+        <select id="map-select"></select> <!-- leer lassen -->
       </div>
+
 
       <div class="filter-buttons">
         <button class="filter-btn active" data-filter="all">Alle</button>
@@ -31,10 +28,7 @@
       </div>
 
       <h3>Agenten</h3>
-      <div class="agent-grid">
-        <img src="images/agents/viper.png" alt="Viper" class="agent" data-agent="viper" id="viper-agent"/>
-        <img src="images/agents/sova.png" alt="Sova" class="agent" data-agent="sova" id="sova-agent"/>
-      </div>
+      <div class="agent-grid" id="agent-grid"></div>
     </aside>
 
     <main class="content">
@@ -45,28 +39,36 @@
       <section class="map-section">
         <div class="map-block">
           <h2>Attack</h2>
-          <h3>Infos</h3>
-          <p id="attack-info">Mid Control ist wichtig auf Ascent. Koordiniertes Pushen hilft beim Site-Einnehmen.</p>
+          <h3>Info</h3>
+          <p id="attack-info"></p>
           <h3>Default Smokes</h3>
-          <img src="images/smokes/default-smokes-placeholder.png" alt="Attack Smokes" class="smoke-image"/>
+          <div id="attack-smokes" class="smoke-wrapper"></div>
         </div>
 
         <div class="map-block">
           <h2>Defend</h2>
-          <h3>Infos</h3>
-          <p id="defend-info">Nutze Operator auf A Heaven, um Mid zu halten. Smokes auf B Eingang sind effektiv.</p>
+          <h3>Info</h3>
+          <p id="defend-info"></p>
           <h3>Default Smokes</h3>
-          <img src="images/smokes/default-smokes-placeholder.png" alt="Defend Smokes" class="smoke-image"/>
+          <div id="defend-smokes" class="smoke-wrapper"></div>
         </div>
       </section>
 
       <section id="agent-guide">
-        <h2>Agenten Guide: <span id="agent-name">Viper</span></h2>
-        <p id="agent-description">Viper ist ein Controller mit starken Fähigkeiten, um das Spielfeld zu dominieren. Ihre Gift-Wände und Smokes machen sie zu einem der stärksten Agenten auf jeder Map.</p>
+        <h2>Agenten Guide: <span id="agent-name"></span></h2>
+        <p id="agent-description"></p>
       </section>
 
+      <input
+        type="text"
+        id="lineup-search"
+        placeholder="Lineup suchen..."
+        class="lineup-search"
+      />
+
+
       <section id="lineups">
-        <h2>Lineups für <span id="lineup-agent-name">Viper</span></h2>
+        <h2>Lineups für <span id="lineup-agent-name"></span></h2>
         <div class="lineup-grid" id="lineup-grid"></div>
       </section>
     </main>
@@ -75,116 +77,223 @@
   <div id="lineup-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn">&times;</span>
-      <h3>Lineup Anleitung</h3>
-      <p id="lineup-description">Hier erscheint die Beschreibung des Lineups.</p>
+      <h3 id="modal-title"></h3>
+      <p id="lineup-description"></p>
+      <div id="lineup-images"></div>
     </div>
   </div>
 
+  <div id="smoke-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="close-smoke-modal">&times;</span>
+      <h3 id="smoke-modal-title"></h3>
+      <img id="smoke-modal-image" class="smoke-modal-image" />
+    </div>
+  </div>
+
+
   <footer>
-    <p>© 2025 Valorant Lineups Fanprojekt</p>
+    <p>© 2025 vyensa.ch</p>
   </footer>
 
   <script>
-    let agentData = {};
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    let data = {};
+    let currentAgent = '';
+    let currentMap = 'ascent';
     let currentFilter = 'all';
-    let currentAgent = 'viper';
 
-    // Map Infos
-    const mapInfos = {
-      ascent: {
-        attackInfo: "Mid Control ist wichtig auf Ascent. Koordiniertes Pushen hilft beim Site-Einnehmen.",
-        defendInfo: "Nutze Operator auf A Heaven, um Mid zu halten. Smokes auf B Eingang sind effektiv."
-      },
-      bind: {
-        attackInfo: "Push Showers mit Smokes, sichere Teleporter für schnelle Rotationen.",
-        defendInfo: "Smoke Hookah und spiele passiv mit Utility Delay."
-      },
-      haven: {
-        attackInfo: "Split Push A und C, nutze Mid Control über Garage.",
-        defendInfo: "A Long kontrollieren und Garage absichern."
-      }
-    };
-
-    // Event Listener für Filter
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentFilter = btn.dataset.filter;
-        renderLineups(currentAgent, currentFilter);
-      });
-    });
-
-    // Map wechseln
-    const mapSelect = document.getElementById('map-select');
+    const agentGrid = document.getElementById('agent-grid');
     const mapTitle = document.getElementById('map-title');
     const attackInfo = document.getElementById('attack-info');
     const defendInfo = document.getElementById('defend-info');
+    const attackSmokes = document.getElementById('attack-smokes');
+    const defendSmokes = document.getElementById('defend-smokes');
+    const agentDescription = document.getElementById('agent-description');
+    const agentNameSpan = document.getElementById('agent-name');
+    const lineupAgentName = document.getElementById('lineup-agent-name');
+    const lineupGrid = document.getElementById('lineup-grid');
+    const modal = document.getElementById('lineup-modal');
+    const closeModalBtn = document.querySelector('.close-btn');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('lineup-description');
+    const modalImages = document.getElementById('lineup-images');
+    const smokeModal = document.getElementById('smoke-modal');
+    const closeSmokeModalBtn = document.getElementById('close-smoke-modal');
+    const smokeModalTitle = document.getElementById('smoke-modal-title');
+    const smokeModalImage = document.getElementById('smoke-modal-image');
+    const mapSelect = document.getElementById('map-select');
+    const lineupSearchInput = document.getElementById('lineup-search');
 
-    mapSelect.addEventListener('change', () => {
-      const selectedMap = mapSelect.value;
-      mapTitle.textContent = selectedMap.charAt(0).toUpperCase() + selectedMap.slice(1);
-      attackInfo.textContent = mapInfos[selectedMap].attackInfo;
-      defendInfo.textContent = mapInfos[selectedMap].defendInfo;
-    });
 
-    // Agenten-Daten laden
+
     fetch('data.json')
-      .then(response => response.json())
-      .then(data => {
-        agentData = data;
-        initializeAgent(currentAgent);
+      .then(res => res.json())
+      .then(json => {
+        data = json;
+        populateMapSelect();
+        renderAgentGrid();
+        currentAgent = Object.keys(data.agents)[0];
+        renderPage();
       });
 
-    // Agenten wechseln
-    const agentGrid = document.querySelector('.agent-grid');
-    const agentNameSpan = document.getElementById('lineup-agent-name');
-    const agentDescriptionSpan = document.getElementById('agent-description');
-    const agentNameSpanGuide = document.getElementById('agent-name');
+      function populateMapSelect() {
+        mapSelect.innerHTML = '';
+        Object.keys(data.maps).forEach(mapKey => {
+          const option = document.createElement('option');
+          option.value = mapKey;
+          option.textContent = capitalize(mapKey);
+          mapSelect.appendChild(option);
+        });
+        mapSelect.value = currentMap; // setze den aktuellen Wert
+      }
+
+
+    function renderAgentGrid() {
+      agentGrid.innerHTML = '';
+      Object.entries(data.agents).forEach(([agentKey, agent]) => {
+        const img = document.createElement('img');
+        img.src = agent.image; // Agent image aus dem JSON laden
+        img.alt = agentKey;
+        img.className = 'agent';
+        img.dataset.agent = agentKey;
+        if (agentKey === currentAgent) img.classList.add('active');
+        agentGrid.appendChild(img);
+      });
+    }
 
     agentGrid.addEventListener('click', (e) => {
       if (e.target.classList.contains('agent')) {
         currentAgent = e.target.dataset.agent;
-        initializeAgent(currentAgent);
+        renderPage();
       }
     });
 
-    // Agenten und Lineups initialisieren
-    function initializeAgent(agent) {
-      // Titel im Agenten Guide und Lineup aktualisieren
-      agentNameSpan.textContent = agent.charAt(0).toUpperCase() + agent.slice(1);
-      agentDescriptionSpan.textContent = agentData[agent].description;
-      agentNameSpanGuide.textContent = agent.charAt(0).toUpperCase() + agent.slice(1);
-
-      // Sidebar aktualisieren (Indikator für den aktuellen Agenten)
-      document.querySelectorAll('.agent').forEach(agentElement => {
-        agentElement.classList.remove('active');
-      });
-      document.getElementById(`${agent}-agent`).classList.add('active');
-
-      // Lineups rendern
-      renderLineups(agent, currentFilter);
+    function renderPage() {
+      updateMapInfos();
+      updateAgentInfo();
+      renderLineups();
+      renderAgentGrid(); // To update active class
     }
 
-    // Lineup-Templates rendern
-    function renderLineups(agent, filter) {
-      const lineupGrid = document.getElementById('lineup-grid');
+    function updateMapInfos() {
+      const mapData = data.maps[currentMap];
+      mapTitle.textContent = capitalize(currentMap);
+      attackInfo.textContent = mapData.attackInfo;
+      defendInfo.textContent = mapData.defendInfo;
+
+      attackSmokes.innerHTML = '';
+      defendSmokes.innerHTML = '';
+
+      // Angriff-Smokes anzeigen
+      mapData.attackSmokes.forEach(smoke => {
+        const img = document.createElement('img');
+        img.src = smoke.image;
+        img.alt = smoke.title;
+        img.title = smoke.title;
+        img.className = 'smoke-image';
+        img.addEventListener('click', () => openSmokeModal(smoke));
+        attackSmokes.appendChild(img);
+      });
+
+      // Verteidigungs-Smokes anzeigen
+      mapData.defendSmokes.forEach(smoke => {
+        const img = document.createElement('img');
+        img.src = smoke.image;
+        img.alt = smoke.title;
+        img.title = smoke.title;
+        img.className = 'smoke-image';
+        img.addEventListener('click', () => openSmokeModal(smoke));
+        defendSmokes.appendChild(img);
+      });
+    }
+
+
+    function updateAgentInfo() {
+      const agent = data.agents[currentAgent];
+      agentDescription.textContent = agent.description;
+      agentNameSpan.textContent = capitalize(currentAgent);
+      lineupAgentName.textContent = capitalize(currentAgent);
+    }
+
+    function renderLineups() {
+      const agent = data.agents[currentAgent];
+      const searchTerm = lineupSearchInput.value.toLowerCase();
       lineupGrid.innerHTML = '';
 
-      agentData[agent].lineups.forEach(lineup => {
-        if (filter === 'all' || lineup.side === filter) {
+      agent.lineups.forEach(lineup => {
+        const matchesFilter = currentFilter === 'all' || currentFilter === lineup.side;
+        const matchesMap = lineup.map === currentMap;
+        const matchesSearch = lineup.title.toLowerCase().includes(searchTerm);
+
+        if (matchesFilter && matchesMap && matchesSearch) {
           const card = document.createElement('div');
-          card.classList.add('lineup-card');
+          card.className = 'lineup-card';
           card.innerHTML = `
-            <img src="${lineup.img}" alt="${lineup.title}" />
-            <button data-description="${lineup.description}">${lineup.title}</button>
+            <img src="${lineup.titleImage}" alt="${lineup.title}" />
+            <button>${lineup.title}</button>
           `;
+          card.querySelector('button').addEventListener('click', () => {
+            modalTitle.textContent = lineup.title;
+            modalDescription.textContent = lineup.description;
+            modalImages.innerHTML = '';
+            lineup.images.forEach(img => {
+              const image = document.createElement('img');
+              image.src = img;
+              image.className = 'smoke-image';
+              modalImages.appendChild(image);
+            });
+            modal.style.display = 'flex';
+          });
           lineupGrid.appendChild(card);
         }
       });
     }
 
+    lineupSearchInput.addEventListener('input', renderLineups);
+
+    closeModalBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    function openSmokeModal(smoke) {
+      smokeModalTitle.textContent = smoke.title;
+      smokeModalImage.src = smoke.image;
+      smokeModal.style.display = 'flex';
+    }
+
+    closeSmokeModalBtn.addEventListener('click', () => {
+      smokeModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === smokeModal) {
+        smokeModal.style.display = 'none';
+      }
+    });
+
+    document.getElementById('map-select').addEventListener('change', (e) => {
+      currentMap = e.target.value;
+      renderPage();
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderLineups();
+      });
+    });
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
   </script>
 </body>
 </html>
