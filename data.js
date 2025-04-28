@@ -803,7 +803,8 @@ const data = {
             "title": "Mid-Control",
             "image": "images/smokes/d-abyss-mid.png"
           }
-        ]
+        ],
+        "bestAgents": [""]
       },
       "ascent": {
         "attackInfo": "If the enemy has only one Sentinel, who is mostly on B-Site or doesn't have one at all, abuse 5-man or split pushes on A-Site",
@@ -835,7 +836,8 @@ const data = {
             "title": "Mid-Control",
             "image": "images/smokes/d-ascent-mid.png"
           }
-        ]
+        ],
+        "bestAgents": ["jett", "waylay", "sova", "breach", "tejo", "killjoy", "vyse", "deadlock", "omen" ]
       },
       "bind": {
         "attackInfo": "Against Eco / Half Buy do 5-man push throughB-Long (TP as escape route)",
@@ -859,7 +861,8 @@ const data = {
             "title": "B-Site",
             "image": "images/smokes/d-bind-b.png"
           }
-        ]
+        ],
+        "bestAgents": [""]
       },
       "breeze": {
         "attackInfo": "Infos folgen",
@@ -891,7 +894,8 @@ const data = {
             "title": "Mid-Control",
             "image": "images/smokes/d-breeze-mid.png"
           }
-        ]
+        ],
+        "bestAgents": [""]
       },
       "fracture": {
         "attackInfo": "Arcade is easier to push than B-Main",
@@ -915,7 +919,8 @@ const data = {
             "title": "B-Site",
             "image": "images/smokes/d-fracture-b.png"
           }
-        ]
+        ],
+        "bestAgents": ["raze", "neon", "breach", "tejo", "kolljoy", "cypher", "brimstone"]
       },
       "haven": {
         "attackInfo": "Destroy Sentinel Util on B and in Garage\nTake Garage-Control",
@@ -947,7 +952,8 @@ const data = {
             "title": "C-Site",
             "image": "images/smokes/d-haven-c.png"
           }
-        ]
+        ],
+        "bestAgents": ["jett", "yoru", "iso", "sova", "breach", "tejo", "cypher", "chamber", "omen"]
       },
       "icebox": {
         "attackInfo": "Infos folgen",
@@ -979,7 +985,8 @@ const data = {
             "title": "Mid-Control",
             "image": "images/smokes/d-icebox-mid.png"
           }
-        ]
+        ],
+        "bestAgents": ["jett", "waylay", "yoru", "sova", "gekko", "sage", "killjoy", "chamber", "viper"]
       },
       "lotus": {
         "attackInfo": "Go C for the first 3 Rounds",
@@ -1011,7 +1018,8 @@ const data = {
             "title": "C-Site",
             "image": "images/smokes/d-lotus-c.png"
           }
-        ]
+        ],
+        "bestAgents": ["raze", "neon", "iso", "fade", "breach", "tejo", "vyse", "deadlock", "chamber", "omen", "astra", "viper"]
       },
       "pearl": {
         "attackInfo": "Infos folgen",
@@ -1043,7 +1051,8 @@ const data = {
             "title": "Mid-Control",
             "image": "images/smokes/d-pearl-mid.png"
           }
-        ]
+        ],
+        "bestAgents": ["raze", "neon", "waylay", "yoru", "sova", "fade", "tejo", "astra"]
       },
       "split": {
         "attackInfo": "Break Sage Wall instantly\nFight for Mid- and Tower-Control",
@@ -1075,7 +1084,8 @@ const data = {
             "title": "Mid-Control",
             "image": "images/smokes/d-split-mid.png"
           }
-        ]
+        ],
+        "bestAgents": ["raze", "waylay", "yoru", "breach", "tejo", "skye", "cypher", "vyse", "sage", "omen", "viper"]
       },
       "sunset": {
         "attackInfo": "Infos folgen",
@@ -1107,7 +1117,8 @@ const data = {
             "title": "Mid-Control",
             "image": "images/smokes/d-sunset-mid.png"
           }
-        ]
+        ],
+        "bestAgents": [""]
       }
     }
   }
