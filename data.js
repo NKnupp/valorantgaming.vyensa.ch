@@ -8,7 +8,52 @@ const data = {
       "brimstone": {
         "description": "Infos folgen.",
         "image": "images/agents/brimstone.png",
-        "lineups": []
+        "lineups": [
+          {
+            "title": "Post Plant | Molly | From Spawn | To A Corner",
+            "titleImage": "images/lineups/brimstone/fracture/attack-a-corner-molly-from-spawn-1.png",
+            "images": [
+              "images/lineups/brimstone/fracture/attack-a-corner-molly-from-spawn-2.png",
+              "images/lineups/brimstone/fracture/attack-a-corner-molly-from-spawn-3.png"
+            ],
+            "description": "-",
+            "side": "attack",
+            "map": "fracture"
+          },
+          {
+            "title": "Post Plant | Molly | From B Lobby | To B Boxes",
+            "titleImage": "images/lineups/brimstone/fracture/attack-b-boxes-molly-from-blobby-1.png",
+            "images": [
+              "images/lineups/brimstone/fracture/attack-b-boxes-molly-from-blobby-2.png",
+              "images/lineups/brimstone/fracture/attack-b-boxes-molly-from-blobby-3.png"
+            ],
+            "description": "-",
+            "side": "attack",
+            "map": "fracture"
+          },
+          {
+            "title": "Post Plant | Molly | From B Main | To B Default",
+            "titleImage": "images/lineups/brimstone/fracture/attack-b-default-molly-from-bmain-1.png",
+            "images": [
+              "images/lineups/brimstone/fracture/attack-b-default-molly-from-bmain-2.png",
+              "images/lineups/brimstone/fracture/attack-b-default-molly-from-bmain-3.png"
+            ],
+            "description": "-",
+            "side": "attack",
+            "map": "fracture"
+          },
+          {
+            "title": "Post Plant | Molly | From A Dish | To B Top",
+            "titleImage": "images/lineups/brimstone/fracture/attack-b-top-molly-from-adish-1.png",
+            "images": [
+              "images/lineups/brimstone/fracture/attack-b-top-molly-from-adish-2.png",
+              "images/lineups/brimstone/fracture/attack-b-top-molly-from-adish-3.png"
+            ],
+            "description": "-",
+            "side": "attack",
+            "map": "fracture"
+          }
+        ]
       },
       "breach": {
         "description": "Infos folgen. Tipps hier hinzufügen.",
@@ -618,7 +663,7 @@ const data = {
         "image": "images/agents/viper.png",
         "lineups": [
           {
-            "title": "Long Post Plant | Molly | From B Ramps | To B Long Plant",
+            "title": "Long Post Plant | Molly | To B Long Plant | From B Ramp",
             "titleImage": "images/lineups/viper/pearl/attack-b-long-plant-ramps-1.png",
             "images": [
               "images/lineups/viper/pearl/attack-b-long-plant-ramps-2.png"

@@ -26,7 +26,7 @@
         }
 
         .sidebar {
-            width: 250px;
+            width: 500px;
             background: #1c1c1c;
             padding: 1rem;
             height: 100vh;
@@ -43,7 +43,7 @@
         }
 
         .sidebar input, .sidebar select, .sidebar button {
-            width: 100%;
+            width: 95%;
             margin-top: 0.5rem;
             padding: 0.8rem;
             background: #333;
@@ -66,6 +66,8 @@
 
         .content h1 {
             color: #ff4655;
+            margin-left: 275px;
+
         }
 
         .output-container {
@@ -73,6 +75,7 @@
             background: #1e1e1e;
             padding: 1rem;
             border-radius: 12px;
+            margin-left: 250px;
         }
 
         .output-container textarea {
@@ -106,7 +109,9 @@
     <div class="container">
         <!-- Sidebar -->
         <div class="sidebar">
-            <h2>JSON Ersteller</h2>
+            <label for="agent">Agent Name:</label>
+            <input type="text" id="agent" placeholder="Agent eingeben">
+
             <label for="title">Titel:</label>
             <input type="text" id="title" placeholder="Titel eingeben">
 
@@ -140,7 +145,6 @@
                 <option value="sunset">Sunset</option>
             </select>
 
-
             <button id="addEntry">Eintrag hinzufügen</button>
         </div>
 
@@ -157,6 +161,7 @@
     <script>
         const addEntryBtn = document.getElementById('addEntry');
         const jsonOutput = document.getElementById('jsonOutput');
+        const agentInput = document.getElementById('agent');
         const titleInput = document.getElementById('title');
         const titleImageInput = document.getElementById('titleImage');
         const imagesInput = document.getElementById('images');
@@ -168,17 +173,27 @@
         let entries = [];
 
         addEntryBtn.addEventListener('click', () => {
-            const title = titleInput.value;
-            const titleImage = titleImageInput.files[0] ? titleImageInput.files[0].name : '';
-            const images = Array.from(imagesInput.files).map(file => file.name);
-            const description = descriptionInput.value;
+            const agent = agentInput.value.trim().toLowerCase();
+            const title = titleInput.value.trim();
+            const titleImageFile = titleImageInput.files[0];
+            const imagesFiles = Array.from(imagesInput.files);
+            const description = descriptionInput.value.trim();
             const side = sideInput.value;
             const map = mapInput.value;
 
+            if (!agent || !title || !titleImageFile) {
+                alert('Bitte fülle alle Pflichtfelder aus (Agent, Titel und Titelbild)!');
+                return;
+            }
+
+            const titleImagePath = `images/lineups/${agent}/${map}/${titleImageFile.name}`;
+
+            const imagesPaths = imagesFiles.map(file => `images/lineups/${agent}/${map}/${file.name}`);
+
             const newEntry = {
                 title,
-                titleImage,
-                images,
+                titleImage: titleImagePath,
+                images: imagesPaths,
                 description: description || "-",
                 side,
                 map
@@ -186,6 +201,14 @@
 
             entries.push(newEntry);
             updateJsonOutput();
+
+            // Felder zurücksetzen (optional)
+            titleInput.value = '';
+            titleImageInput.value = '';
+            imagesInput.value = '';
+            descriptionInput.value = '';
+            sideInput.selectedIndex = 0;
+            mapInput.selectedIndex = 0;
         });
 
         copyJsonBtn.addEventListener('click', () => {
@@ -201,4 +224,3 @@
     </script>
 </body>
 </html>
-
