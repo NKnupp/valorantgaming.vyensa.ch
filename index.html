@@ -1,410 +1,420 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Valorant Lineups</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="header">
-    <h1>Valorant Lineups</h1>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valorant Lineups</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>Valorant Lineups</h1>
+    </header>
 
-  <div class="container">
-    <aside class="sidebar">
-      <h2>Navigation</h2>
+    <div class="container">
+      <aside class="sidebar">
+        <h2>Navigation</h2>
 
-      <label for="map-select">Map auswählen:</label>
-      <div class="dropdown">
-        <select id="map-select"></select>
-      </div>
+        <label for="map-select">Map auswählen:</label>
+        <div class="dropdown">
+          <select id="map-select"></select>
+        </div>
 
-      <div class="filter-buttons">
-        <button class="filter-btn active" data-filter="all">Alle</button>
-        <button class="filter-btn" data-filter="attack">Attack</button>
-        <button class="filter-btn" data-filter="defense">Defense</button>
-      </div>
-      <br>
-      <h3>Agents</h3>
-      <div class="agent-grid" id="agent-grid-with-lineups"></div>
-      <br>
-      <hr>
-      <div class="agent-grid" id="agent-grid-without-lineups"></div>
-
-      <div class="sidebar-footer">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Alle</button>
+          <button class="filter-btn" data-filter="attack">Attack</button>
+          <button class="filter-btn" data-filter="defense">Defense</button>
+        </div>
+        <br />
+        <h3>Agents</h3>
+        <div class="agent-grid" id="agent-grid-with-lineups"></div>
+        <br />
         <hr />
-        <p style="font-size: 0.8rem; color: #aaa; margin-top: 1rem;">
-          Erstellt von vyensa <br> Letztes Update: April 2025 <br><br><br>
-        </p>
-      </div>
-    </aside>
+        <div class="agent-grid" id="agent-grid-without-lineups"></div>
 
-    <main class="content">
-      <div class="map-header">
-        <h1 id="map-title">Ascent</h1>
-        <div id="best-agents" class="best-agents"></div>
-      </div>
+        <div class="sidebar-footer">
+          <hr />
+          <p style="font-size: 0.8rem; color: #aaa; margin-top: 1rem">
+            Erstellt von vyensa <br />
+            Letztes Update: April 2025 <br /><br /><br />
+          </p>
+        </div>
+      </aside>
 
-      <section class="map-section">
-        <div class="map-block">
-          <h2>Attack</h2>
-          <h3>Info</h3>
-          <p id="attack-info"></p>
-          <h3>Default Smokes</h3>
-          <div id="attack-smokes" class="smoke-wrapper"></div>
+      <main class="content">
+        <div class="map-header">
+          <h1 id="map-title">Ascent</h1>
+          <div id="best-agents" class="best-agents"></div>
         </div>
 
-        <div class="map-block">
-          <h2>Defend</h2>
-          <h3>Info</h3>
-          <p id="defend-info"></p>
-          <h3>Default Smokes</h3>
-          <div id="defend-smokes" class="smoke-wrapper"></div>
-        </div>
-      </section>
+        <section class="map-section">
+          <div class="map-block">
+            <h2>Attack</h2>
+            <h3>Info</h3>
+            <p id="attack-info"></p>
+            <h3>Default Smokes</h3>
+            <div id="attack-smokes" class="smoke-wrapper"></div>
+          </div>
 
-      <section id="agent-guide">
-        <h2>Agent Guide: <span id="agent-name"></span></h2>
-        <p id="agent-description"></p>
-      </section>
-      <br>
-      <input
-        type="text"
-        id="lineup-search"
-        placeholder="Search Lineup..."
-        class="lineup-search"
-      />
+          <div class="map-block">
+            <h2>Defend</h2>
+            <h3>Info</h3>
+            <p id="defend-info"></p>
+            <h3>Default Smokes</h3>
+            <div id="defend-smokes" class="smoke-wrapper"></div>
+          </div>
+        </section>
 
-      <section id="lineups">
-        <h2>Lineups for <span id="lineup-agent-name"></span></h2>
-        <div class="lineup-grid" id="lineup-grid"></div>
-      </section>
-    </main>
-  </div>
+        <section id="agent-guide">
+          <h2>Agent Guide: <span id="agent-name"></span></h2>
+          <p id="agent-description"></p>
+        </section>
+        <br />
+        <input
+          type="text"
+          id="lineup-search"
+          placeholder="Search Lineup..."
+          class="lineup-search"
+        />
 
-  <div id="lineup-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h3 id="modal-title"></h3>
-      <p id="lineup-description"></p>
-      <div id="lineup-images"></div>
+        <section id="lineups">
+          <h2>Lineups for <span id="lineup-agent-name"></span></h2>
+          <div class="lineup-grid" id="lineup-grid"></div>
+        </section>
+      </main>
     </div>
-  </div>
 
-  <div id="smoke-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" id="close-smoke-modal">&times;</span>
-      <h3 id="smoke-modal-title"></h3>
-      <img id="smoke-modal-image" class="smoke-modal-image" />
+    <div id="lineup-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3 id="modal-title"></h3>
+        <p id="lineup-description"></p>
+        <div id="lineup-images"></div>
+      </div>
     </div>
-  </div>
 
-  <footer>
-    <p>© 2025 vyensa.ch</p>
-  </footer>
+    <div id="smoke-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" id="close-smoke-modal">&times;</span>
+        <h3 id="smoke-modal-title"></h3>
+        <img id="smoke-modal-image" class="smoke-modal-image" />
+      </div>
+    </div>
 
-  <script src="data.js"></script>
-  <script>
-    let currentAgent = 'sova';
-    let currentMap = 'ascent';
-    let currentFilter = 'all';
+    <footer>
+      <p>© 2025 vyensa.ch</p>
+    </footer>
 
-    const agentGridWithLineups = document.getElementById('agent-grid-with-lineups');
-    const agentGridWithoutLineups = document.getElementById('agent-grid-without-lineups');
-    const mapTitle = document.getElementById('map-title');
-    const attackInfo = document.getElementById('attack-info');
-    const defendInfo = document.getElementById('defend-info');
-    const attackSmokes = document.getElementById('attack-smokes');
-    const defendSmokes = document.getElementById('defend-smokes');
-    const agentDescription = document.getElementById('agent-description');
-    const agentNameSpan = document.getElementById('agent-name');
-    const lineupAgentName = document.getElementById('lineup-agent-name');
-    const lineupGrid = document.getElementById('lineup-grid');
-    const modal = document.getElementById('lineup-modal');
-    const closeModalBtn = document.querySelector('.close-btn');
-    const modalTitle = document.getElementById('modal-title');
-    const modalDescription = document.getElementById('lineup-description');
-    const modalImages = document.getElementById('lineup-images');
-    const smokeModal = document.getElementById('smoke-modal');
-    const closeSmokeModalBtn = document.getElementById('close-smoke-modal');
-    const smokeModalTitle = document.getElementById('smoke-modal-title');
-    const smokeModalImage = document.getElementById('smoke-modal-image');
-    const mapSelect = document.getElementById('map-select');
-    const lineupSearchInput = document.getElementById('lineup-search');
+    <script src="data.js"></script>
+    <script>
+      let currentAgent = "sova";
+      let currentMap = "ascent";
+      let currentFilter = "all";
 
-    populateMapSelect();
-    renderAgentsWithLineups();
-    renderAgentsWithoutLineups();
+      const agentGridWithLineups = document.getElementById(
+        "agent-grid-with-lineups"
+      );
+      const agentGridWithoutLineups = document.getElementById(
+        "agent-grid-without-lineups"
+      );
+      const mapTitle = document.getElementById("map-title");
+      const attackInfo = document.getElementById("attack-info");
+      const defendInfo = document.getElementById("defend-info");
+      const attackSmokes = document.getElementById("attack-smokes");
+      const defendSmokes = document.getElementById("defend-smokes");
+      const agentDescription = document.getElementById("agent-description");
+      const agentNameSpan = document.getElementById("agent-name");
+      const lineupAgentName = document.getElementById("lineup-agent-name");
+      const lineupGrid = document.getElementById("lineup-grid");
+      const modal = document.getElementById("lineup-modal");
+      const closeModalBtn = document.querySelector(".close-btn");
+      const modalTitle = document.getElementById("modal-title");
+      const modalDescription = document.getElementById("lineup-description");
+      const modalImages = document.getElementById("lineup-images");
+      const smokeModal = document.getElementById("smoke-modal");
+      const closeSmokeModalBtn = document.getElementById("close-smoke-modal");
+      const smokeModalTitle = document.getElementById("smoke-modal-title");
+      const smokeModalImage = document.getElementById("smoke-modal-image");
+      const mapSelect = document.getElementById("map-select");
+      const lineupSearchInput = document.getElementById("lineup-search");
 
-    function populateMapSelect() {
-      mapSelect.innerHTML = '';
-      Object.keys(data.maps).forEach(mapKey => {
-        const option = document.createElement('option');
-        option.value = mapKey;
-        option.textContent = capitalize(mapKey);
-        mapSelect.appendChild(option);
-      });
-      mapSelect.value = currentMap;
-    }
-
-    function renderAgentsWithLineups() {
-      agentGridWithLineups.innerHTML = ''; // Vorherige Agenten leeren
-
-      const agentsWithLineups = [];
-
-      // Gehe durch alle Agenten
-      Object.entries(data.agents).forEach(([agentKey, agent]) => {
-        // Wenn der Agent mindestens ein Lineup hat, füge ihn zur Liste hinzu
-        if (agent.lineups && agent.lineups.length > 0) {
-          agentsWithLineups.push({ key: agentKey, ...agent });
-        }
-      });
-
-      // Agenten mit Lineups anzeigen
-      agentsWithLineups.forEach(agent => {
-        const img = document.createElement('img');
-        img.src = agent.image;
-        img.alt = agent.key;
-        img.className = 'agent';
-        img.dataset.agent = agent.key;
-
-        // Wenn der Agent der aktuelle Agent ist, füge die "active"-Klasse hinzu
-        if (agent.key === currentAgent) img.classList.add('active');
-
-        // Event-Listener für das Bild hinzufügen
-        img.addEventListener('click', function() {
-          currentAgent = agent.key;  // Setze den aktuellen Agenten
-          renderPage();  // Seite neu rendern (Agenteninfo etc.)
-          updateActiveAgent();  // Stelle sicher, dass das Bild als aktiv markiert wird
-        });
-
-        agentGridWithLineups.appendChild(img);
-      });
-
-      // Wenn keine Agenten mit Lineups vorhanden sind, zeige eine Nachricht an
-      if (agentsWithLineups.length === 0) {
-        const label = document.createElement('div');
-        label.className = 'no-lineups-title';
-        label.textContent = 'Keine Lineups verfügbar';
-        agentGridWithLineups.appendChild(label);
-      }
-    }
-
-    function renderAgentsWithoutLineups() {
-      agentGridWithoutLineups.innerHTML = ''; // Vorherige Agenten leeren
-
-      const agentsWithoutLineups = [];
-
-      // Gehe durch alle Agenten
-      Object.entries(data.agents).forEach(([agentKey, agent]) => {
-        // Wenn der Agent keine Lineups hat, füge ihn zur Liste hinzu
-        if (!agent.lineups || agent.lineups.length === 0) {
-          agentsWithoutLineups.push({ key: agentKey, ...agent });
-        }
-      });
-
-      // Agenten ohne Lineups anzeigen
-      agentsWithoutLineups.forEach(agent => {
-        const img = document.createElement('img');
-        img.src = agent.image;
-        img.alt = agent.key;
-        img.className = 'agent no-lineups';
-        img.dataset.agent = agent.key;
-
-        // Event-Listener für das Bild hinzufügen
-        img.addEventListener('click', function() {
-          currentAgent = agent.key;  // Setze den aktuellen Agenten
-          renderPage();  // Seite neu rendern (Agenteninfo etc.)
-          updateActiveAgent();  // Stelle sicher, dass das Bild als aktiv markiert wird
-        });
-
-        agentGridWithoutLineups.appendChild(img);
-      });
-
-      // Wenn keine Agenten ohne Lineups vorhanden sind, zeige eine Nachricht an
-      if (agentsWithoutLineups.length === 0) {
-        const label = document.createElement('div');
-        label.className = 'no-lineups-title';
-        label.textContent = 'Alle Agenten haben Lineups';
-        agentGridWithoutLineups.appendChild(label);
-      }
-    }
-
-    // Diese Funktion sorgt dafür, dass das aktuell ausgewählte Agentenbild als "aktiv" markiert wird
-    function updateActiveAgent() {
-      const agentImages = document.querySelectorAll('.agent');
-      agentImages.forEach(img => {
-        if (img.dataset.agent === currentAgent) {
-          img.classList.add('active');  // Markiere als aktiv
-        } else {
-          img.classList.remove('active');  // Entferne die "aktive" Markierung von anderen
-        }
-      });
-    }
-
-    // Nach dem Laden der Seite den aktuellen Agenten als aktiv setzen
-    updateActiveAgent();
-    renderBestAgents();
-
-
-    function renderPage() {
-      updateMapInfos();
-      updateAgentInfo();
-      renderLineups();
+      populateMapSelect();
       renderAgentsWithLineups();
       renderAgentsWithoutLineups();
+
+      function populateMapSelect() {
+        mapSelect.innerHTML = "";
+        Object.keys(data.maps).forEach((mapKey) => {
+          const option = document.createElement("option");
+          option.value = mapKey;
+          option.textContent = capitalize(mapKey);
+          mapSelect.appendChild(option);
+        });
+        mapSelect.value = currentMap;
+      }
+
+      function renderAgentsWithLineups() {
+        agentGridWithLineups.innerHTML = ""; // Vorherige Agenten leeren
+
+        const agentsWithLineups = [];
+
+        // Gehe durch alle Agenten
+        Object.entries(data.agents).forEach(([agentKey, agent]) => {
+          // Wenn der Agent mindestens ein Lineup hat, füge ihn zur Liste hinzu
+          if (agent.lineups && agent.lineups.length > 0) {
+            agentsWithLineups.push({ key: agentKey, ...agent });
+          }
+        });
+
+        // Agenten mit Lineups anzeigen
+        agentsWithLineups.forEach((agent) => {
+          const img = document.createElement("img");
+          img.src = agent.image;
+          img.alt = agent.key;
+          img.className = "agent";
+          img.dataset.agent = agent.key;
+
+          // Wenn der Agent der aktuelle Agent ist, füge die "active"-Klasse hinzu
+          if (agent.key === currentAgent) img.classList.add("active");
+
+          // Event-Listener für das Bild hinzufügen
+          img.addEventListener("click", function () {
+            currentAgent = agent.key; // Setze den aktuellen Agenten
+            renderPage(); // Seite neu rendern (Agenteninfo etc.)
+            updateActiveAgent(); // Stelle sicher, dass das Bild als aktiv markiert wird
+          });
+
+          agentGridWithLineups.appendChild(img);
+        });
+
+        // Wenn keine Agenten mit Lineups vorhanden sind, zeige eine Nachricht an
+        if (agentsWithLineups.length === 0) {
+          const label = document.createElement("div");
+          label.className = "no-lineups-title";
+          label.textContent = "Keine Lineups verfügbar";
+          agentGridWithLineups.appendChild(label);
+        }
+      }
+
+      function renderAgentsWithoutLineups() {
+        agentGridWithoutLineups.innerHTML = ""; // Vorherige Agenten leeren
+
+        const agentsWithoutLineups = [];
+
+        // Gehe durch alle Agenten
+        Object.entries(data.agents).forEach(([agentKey, agent]) => {
+          // Wenn der Agent keine Lineups hat, füge ihn zur Liste hinzu
+          if (!agent.lineups || agent.lineups.length === 0) {
+            agentsWithoutLineups.push({ key: agentKey, ...agent });
+          }
+        });
+
+        // Agenten ohne Lineups anzeigen
+        agentsWithoutLineups.forEach((agent) => {
+          const img = document.createElement("img");
+          img.src = agent.image;
+          img.alt = agent.key;
+          img.className = "agent no-lineups";
+          img.dataset.agent = agent.key;
+
+          // Event-Listener für das Bild hinzufügen
+          img.addEventListener("click", function () {
+            currentAgent = agent.key; // Setze den aktuellen Agenten
+            renderPage(); // Seite neu rendern (Agenteninfo etc.)
+            updateActiveAgent(); // Stelle sicher, dass das Bild als aktiv markiert wird
+          });
+
+          agentGridWithoutLineups.appendChild(img);
+        });
+
+        // Wenn keine Agenten ohne Lineups vorhanden sind, zeige eine Nachricht an
+        if (agentsWithoutLineups.length === 0) {
+          const label = document.createElement("div");
+          label.className = "no-lineups-title";
+          label.textContent = "Alle Agenten haben Lineups";
+          agentGridWithoutLineups.appendChild(label);
+        }
+      }
+
+      // Diese Funktion sorgt dafür, dass das aktuell ausgewählte Agentenbild als "aktiv" markiert wird
+      function updateActiveAgent() {
+        const agentImages = document.querySelectorAll(".agent");
+        agentImages.forEach((img) => {
+          if (img.dataset.agent === currentAgent) {
+            img.classList.add("active"); // Markiere als aktiv
+          } else {
+            img.classList.remove("active"); // Entferne die "aktive" Markierung von anderen
+          }
+        });
+      }
+
+      // Nach dem Laden der Seite den aktuellen Agenten als aktiv setzen
+      updateActiveAgent();
       renderBestAgents();
 
-    }
+      function renderPage() {
+        updateMapInfos();
+        updateAgentInfo();
+        renderLineups();
+        renderAgentsWithLineups();
+        renderAgentsWithoutLineups();
+        renderBestAgents();
+      }
 
-    function updateMapInfos() {
-      const mapData = data.maps[currentMap];
-      mapTitle.textContent = capitalize(currentMap);
+      function updateMapInfos() {
+        const mapData = data.maps[currentMap];
+        mapTitle.textContent = capitalize(currentMap);
 
-      attackInfo.innerHTML = `<ul>` + mapData.attackInfo
-        .split('\n')
-        .map(line => `<li>${line}</li>`)
-        .join('') + `</ul>`;
+        attackInfo.innerHTML =
+          `<ul>` +
+          mapData.attackInfo
+            .split("\n")
+            .map((line) => `<li>${line}</li>`)
+            .join("") +
+          `</ul>`;
 
-      defendInfo.innerHTML = `<ul>` + mapData.defendInfo
-        .split('\n')
-        .map(line => `<li>${line}</li>`)
-        .join('') + `</ul>`;
+        defendInfo.innerHTML =
+          `<ul>` +
+          mapData.defendInfo
+            .split("\n")
+            .map((line) => `<li>${line}</li>`)
+            .join("") +
+          `</ul>`;
 
-      attackSmokes.innerHTML = '';
-      defendSmokes.innerHTML = '';
+        attackSmokes.innerHTML = "";
+        defendSmokes.innerHTML = "";
 
-      mapData.attackSmokes.forEach(smoke => {
-        const img = document.createElement('img');
-        img.src = smoke.image;
-        img.alt = smoke.title;
-        img.title = smoke.title;
-        img.className = 'smoke-image';
-        img.addEventListener('click', () => openSmokeModal(smoke));
-        attackSmokes.appendChild(img);
-      });
+        mapData.attackSmokes.forEach((smoke) => {
+          const img = document.createElement("img");
+          img.src = smoke.image;
+          img.alt = smoke.title;
+          img.title = smoke.title;
+          img.className = "smoke-image";
+          img.addEventListener("click", () => openSmokeModal(smoke));
+          attackSmokes.appendChild(img);
+        });
 
-      mapData.defendSmokes.forEach(smoke => {
-        const img = document.createElement('img');
-        img.src = smoke.image;
-        img.alt = smoke.title;
-        img.title = smoke.title;
-        img.className = 'smoke-image';
-        img.addEventListener('click', () => openSmokeModal(smoke));
-        defendSmokes.appendChild(img);
-      });
-    }
+        mapData.defendSmokes.forEach((smoke) => {
+          const img = document.createElement("img");
+          img.src = smoke.image;
+          img.alt = smoke.title;
+          img.title = smoke.title;
+          img.className = "smoke-image";
+          img.addEventListener("click", () => openSmokeModal(smoke));
+          defendSmokes.appendChild(img);
+        });
+      }
 
-    function updateAgentInfo() {
-      const agent = data.agents[currentAgent];
-      agentDescription.textContent = agent.description;
-      agentNameSpan.textContent = capitalize(currentAgent);
-      lineupAgentName.textContent = capitalize(currentAgent);
-    }
+      function updateAgentInfo() {
+        const agent = data.agents[currentAgent];
+        agentDescription.textContent = agent.description;
+        agentNameSpan.textContent = capitalize(currentAgent);
+        lineupAgentName.textContent = capitalize(currentAgent);
+      }
 
-    function renderLineups() {
-      const agent = data.agents[currentAgent];
-      const searchTerm = lineupSearchInput.value.toLowerCase();
-      lineupGrid.innerHTML = '';
+      function renderLineups() {
+        const agent = data.agents[currentAgent];
+        const searchTerm = lineupSearchInput.value.toLowerCase();
+        lineupGrid.innerHTML = "";
 
-      agent.lineups.forEach(lineup => {
-        const matchesFilter = currentFilter === 'all' || currentFilter === lineup.side;
-        const matchesMap = lineup.map === currentMap;
-        const matchesSearch = lineup.title.toLowerCase().includes(searchTerm);
+        agent.lineups.forEach((lineup) => {
+          const matchesFilter =
+            currentFilter === "all" || currentFilter === lineup.side;
+          const matchesMap = lineup.map === currentMap;
+          const matchesSearch = lineup.title.toLowerCase().includes(searchTerm);
 
-        if (matchesFilter && matchesMap && matchesSearch) {
-          const card = document.createElement('div');
-          card.className = 'lineup-card';
-          card.innerHTML = `
+          if (matchesFilter && matchesMap && matchesSearch) {
+            const card = document.createElement("div");
+            card.className = "lineup-card";
+            card.innerHTML = `
             <img src="${lineup.titleImage}" alt="${lineup.title}" />
             <button>${lineup.title}</button>
           `;
-          card.querySelector('button').addEventListener('click', () => {
-            modalTitle.textContent = lineup.title;
-            modalDescription.textContent = lineup.description;
-            modalImages.innerHTML = '';
-            lineup.images.forEach(img => {
-              const image = document.createElement('img');
-              image.src = img;
-              image.className = 'lineup-image';
-              modalImages.appendChild(image);
+            card.querySelector("button").addEventListener("click", () => {
+              modalTitle.textContent = lineup.title;
+              modalDescription.textContent = lineup.description;
+              modalImages.innerHTML = "";
+              lineup.images.forEach((img) => {
+                const image = document.createElement("img");
+                image.src = img;
+                image.className = "lineup-image";
+                modalImages.appendChild(image);
+              });
+              modal.style.display = "flex";
             });
-            modal.style.display = 'flex';
-          });
-          lineupGrid.appendChild(card);
+            lineupGrid.appendChild(card);
+          }
+        });
+      }
+
+      lineupSearchInput.addEventListener("input", renderLineups);
+
+      closeModalBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
         }
       });
-    }
 
-    lineupSearchInput.addEventListener('input', renderLineups);
-
-    closeModalBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', e => {
-      if (e.target === modal) {
-        modal.style.display = 'none';
+      function openSmokeModal(smoke) {
+        smokeModalTitle.textContent = smoke.title;
+        smokeModalImage.src = smoke.image;
+        smokeModal.style.display = "flex";
       }
-    });
 
-    function openSmokeModal(smoke) {
-      smokeModalTitle.textContent = smoke.title;
-      smokeModalImage.src = smoke.image;
-      smokeModal.style.display = 'flex';
-    }
-
-    closeSmokeModalBtn.addEventListener('click', () => {
-      smokeModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', (e) => {
-      if (e.target === smokeModal) {
-        smokeModal.style.display = 'none';
-      }
-    });
-
-    document.getElementById('map-select').addEventListener('change', (e) => {
-      currentMap = e.target.value;
-      renderPage();
-    });
-
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentFilter = btn.dataset.filter;
-        renderLineups();
+      closeSmokeModalBtn.addEventListener("click", () => {
+        smokeModal.style.display = "none";
       });
-    });
 
-    function capitalize(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-    function renderBestAgents() {
-      const bestAgentsContainer = document.getElementById('best-agents');
-      bestAgentsContainer.innerHTML = ''; // Erstmal leeren
-
-      const mapData = data.maps[currentMap];
-
-      if (!mapData.bestAgents || mapData.bestAgents.length === 0) return; // Keine besten Agents vorhanden
-
-      mapData.bestAgents.forEach(agentKey => {
-        const agent = data.agents[agentKey];
-        if (agent) {
-          const img = document.createElement('img');
-          img.src = agent.image;
-          img.alt = agentKey;
-          img.title = capitalize(agentKey);
-          img.className = 'best-agent-img';
-          bestAgentsContainer.appendChild(img);
+      window.addEventListener("click", (e) => {
+        if (e.target === smokeModal) {
+          smokeModal.style.display = "none";
         }
       });
-    }
 
+      document.getElementById("map-select").addEventListener("change", (e) => {
+        currentMap = e.target.value;
+        renderPage();
+      });
 
-  </script>
-</body>
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentFilter = btn.dataset.filter;
+          renderLineups();
+        });
+      });
+
+      function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+
+      function renderBestAgents() {
+        const bestAgentsContainer = document.getElementById("best-agents");
+        bestAgentsContainer.innerHTML = ""; // Erstmal leeren
+
+        const mapData = data.maps[currentMap];
+
+        if (!mapData.bestAgents || mapData.bestAgents.length === 0) return; // Keine besten Agents vorhanden
+
+        mapData.bestAgents.forEach((agentKey) => {
+          const agent = data.agents[agentKey];
+          if (agent) {
+            const img = document.createElement("img");
+            img.src = agent.image;
+            img.alt = agentKey;
+            img.title = capitalize(agentKey);
+            img.className = "best-agent-img";
+            bestAgentsContainer.appendChild(img);
+          }
+        });
+      }
+    </script>
+  </body>
 </html>

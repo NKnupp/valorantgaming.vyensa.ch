@@ -1,226 +1,236 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JSON Ersteller</title>
     <style>
-        /* Deine CSS-Styles hier */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #121212;
-            color: #e0e0e0;
-            opacity: 0;
-            animation: fadeIn 0.5s forwards;
-        }
+      /* Deine CSS-Styles hier */
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #121212;
+        color: #e0e0e0;
+        opacity: 0;
+        animation: fadeIn 0.5s forwards;
+      }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
         }
+      }
 
-        .container {
-            display: flex;
-        }
+      .container {
+        display: flex;
+      }
 
-        .sidebar {
-            width: 500px;
-            background: #1c1c1c;
-            padding: 1rem;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-            overflow-y: auto;
-        }
+      .sidebar {
+        width: 500px;
+        background: #1c1c1c;
+        padding: 1rem;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+      }
 
-        .sidebar h2, .sidebar h3 {
-            color: #ff4655;
-            margin-top: 0;
-        }
+      .sidebar h2,
+      .sidebar h3 {
+        color: #ff4655;
+        margin-top: 0;
+      }
 
-        .sidebar input, .sidebar select, .sidebar button {
-            width: 95%;
-            margin-top: 0.5rem;
-            padding: 0.8rem;
-            background: #333;
-            color: white;
-            border: 1px solid #ff4655;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-        }
+      .sidebar input,
+      .sidebar select,
+      .sidebar button {
+        width: 95%;
+        margin-top: 0.5rem;
+        padding: 0.8rem;
+        background: #333;
+        color: white;
+        border: 1px solid #ff4655;
+        border-radius: 8px;
+        font-size: 1rem;
+        outline: none;
+      }
 
-        .sidebar button:hover {
-            background: #ff4655;
-        }
+      .sidebar button:hover {
+        background: #ff4655;
+      }
 
-        .content {
-            margin-left: 250px;
-            margin-right: 32px;
-            padding: 2rem;
-        }
+      .content {
+        margin-left: 250px;
+        margin-right: 32px;
+        padding: 2rem;
+      }
 
-        .content h1 {
-            color: #ff4655;
-            margin-left: 275px;
+      .content h1 {
+        color: #ff4655;
+        margin-left: 275px;
+      }
 
-        }
+      .output-container {
+        margin-top: 2rem;
+        background: #1e1e1e;
+        padding: 1rem;
+        border-radius: 12px;
+        margin-left: 250px;
+      }
 
-        .output-container {
-            margin-top: 2rem;
-            background: #1e1e1e;
-            padding: 1rem;
-            border-radius: 12px;
-            margin-left: 250px;
-        }
+      .output-container textarea {
+        width: 100%;
+        height: 200px;
+        background: #333;
+        color: white;
+        border: 1px solid #ff4655;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 1rem;
+        padding: 10px;
+      }
 
-        .output-container textarea {
-            width: 100%;
-            height: 200px;
-            background: #333;
-            color: white;
-            border: 1px solid #ff4655;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 1rem;
-            padding: 10px;
-        }
+      .output-container button {
+        margin-top: 1rem;
+        background: #ff4655;
+        color: white;
+        border: none;
+        padding: 0.8rem;
+        border-radius: 8px;
+        cursor: pointer;
+      }
 
-        .output-container button {
-            margin-top: 1rem;
-            background: #ff4655;
-            color: white;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .output-container button:hover {
-            background: #d4423e;
-        }
+      .output-container button:hover {
+        background: #d4423e;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <label for="agent">Agent Name:</label>
-            <input type="text" id="agent" placeholder="Agent eingeben">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <label for="agent">Agent Name:</label>
+        <input type="text" id="agent" placeholder="Agent eingeben" />
 
-            <label for="title">Titel:</label>
-            <input type="text" id="title" placeholder="Titel eingeben">
+        <label for="title">Titel:</label>
+        <input type="text" id="title" placeholder="Titel eingeben" />
 
-            <label for="titleImage">Titelbild (nur ein Bild):</label>
-            <input type="file" id="titleImage" accept="image/*">
+        <label for="titleImage">Titelbild (nur ein Bild):</label>
+        <input type="file" id="titleImage" accept="image/*" />
 
-            <label for="images">Weitere Bilder:</label>
-            <input type="file" id="images" accept="image/*" multiple>
+        <label for="images">Weitere Bilder:</label>
+        <input type="file" id="images" accept="image/*" multiple />
 
-            <label for="description">Beschreibung:</label>
-            <input type="text" id="description" placeholder="Beschreibung eingeben">
+        <label for="description">Beschreibung:</label>
+        <input
+          type="text"
+          id="description"
+          placeholder="Beschreibung eingeben"
+        />
 
-            <label for="side">Seite:</label>
-            <select id="side">
-                <option value="attack">Attack</option>
-                <option value="defense">Defense</option>
-            </select>
+        <label for="side">Seite:</label>
+        <select id="side">
+          <option value="attack">Attack</option>
+          <option value="defense">Defense</option>
+        </select>
 
-            <label for="map">Karte:</label>
-            <select id="map">
-                <option value="abyss">Abyss</option>
-                <option value="ascent">Ascent</option>
-                <option value="bind">Bind</option>
-                <option value="breeze">Breeze</option>
-                <option value="fracture">Fracture</option>
-                <option value="haven">Haven</option>
-                <option value="icebox">Icebox</option>
-                <option value="lotus">Lotus</option>
-                <option value="pearl">Pearl</option>
-                <option value="split">Split</option>
-                <option value="sunset">Sunset</option>
-            </select>
+        <label for="map">Karte:</label>
+        <select id="map">
+          <option value="abyss">Abyss</option>
+          <option value="ascent">Ascent</option>
+          <option value="bind">Bind</option>
+          <option value="breeze">Breeze</option>
+          <option value="fracture">Fracture</option>
+          <option value="haven">Haven</option>
+          <option value="icebox">Icebox</option>
+          <option value="lotus">Lotus</option>
+          <option value="pearl">Pearl</option>
+          <option value="split">Split</option>
+          <option value="sunset">Sunset</option>
+        </select>
 
-            <button id="addEntry">Eintrag hinzufügen</button>
+        <button id="addEntry">Eintrag hinzufügen</button>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <h1>Generierter JSON</h1>
+        <div class="output-container">
+          <textarea id="jsonOutput" readonly></textarea>
+          <button id="copyJson">JSON kopieren</button>
         </div>
-
-        <!-- Content -->
-        <div class="content">
-            <h1>Generierter JSON</h1>
-            <div class="output-container">
-                <textarea id="jsonOutput" readonly></textarea>
-                <button id="copyJson">JSON kopieren</button>
-            </div>
-        </div>
+      </div>
     </div>
 
     <script>
-        const addEntryBtn = document.getElementById('addEntry');
-        const jsonOutput = document.getElementById('jsonOutput');
-        const agentInput = document.getElementById('agent');
-        const titleInput = document.getElementById('title');
-        const titleImageInput = document.getElementById('titleImage');
-        const imagesInput = document.getElementById('images');
-        const descriptionInput = document.getElementById('description');
-        const sideInput = document.getElementById('side');
-        const mapInput = document.getElementById('map');
-        const copyJsonBtn = document.getElementById('copyJson');
+      const addEntryBtn = document.getElementById("addEntry");
+      const jsonOutput = document.getElementById("jsonOutput");
+      const agentInput = document.getElementById("agent");
+      const titleInput = document.getElementById("title");
+      const titleImageInput = document.getElementById("titleImage");
+      const imagesInput = document.getElementById("images");
+      const descriptionInput = document.getElementById("description");
+      const sideInput = document.getElementById("side");
+      const mapInput = document.getElementById("map");
+      const copyJsonBtn = document.getElementById("copyJson");
 
-        let entries = [];
+      let entries = [];
 
-        addEntryBtn.addEventListener('click', () => {
-            const agent = agentInput.value.trim().toLowerCase();
-            const title = titleInput.value.trim();
-            const titleImageFile = titleImageInput.files[0];
-            const imagesFiles = Array.from(imagesInput.files);
-            const description = descriptionInput.value.trim();
-            const side = sideInput.value;
-            const map = mapInput.value;
+      addEntryBtn.addEventListener("click", () => {
+        const agent = agentInput.value.trim().toLowerCase();
+        const title = titleInput.value.trim();
+        const titleImageFile = titleImageInput.files[0];
+        const imagesFiles = Array.from(imagesInput.files);
+        const description = descriptionInput.value.trim();
+        const side = sideInput.value;
+        const map = mapInput.value;
 
-            if (!agent || !title || !titleImageFile) {
-                alert('Bitte fülle alle Pflichtfelder aus (Agent, Titel und Titelbild)!');
-                return;
-            }
-
-            const titleImagePath = `images/lineups/${agent}/${map}/${titleImageFile.name}`;
-
-            const imagesPaths = imagesFiles.map(file => `images/lineups/${agent}/${map}/${file.name}`);
-
-            const newEntry = {
-                title,
-                titleImage: titleImagePath,
-                images: imagesPaths,
-                description: description || "-",
-                side,
-                map
-            };
-
-            entries.push(newEntry);
-            updateJsonOutput();
-
-            // Felder zurücksetzen (optional)
-            titleInput.value = '';
-            titleImageInput.value = '';
-            imagesInput.value = '';
-            descriptionInput.value = '';
-            sideInput.selectedIndex = 0;
-            mapInput.selectedIndex = 0;
-        });
-
-        copyJsonBtn.addEventListener('click', () => {
-            const text = jsonOutput.value;
-            navigator.clipboard.writeText(text).then(() => {
-                alert('JSON kopiert!');
-            });
-        });
-
-        function updateJsonOutput() {
-            jsonOutput.value = JSON.stringify(entries, null, 2);
+        if (!agent || !title || !titleImageFile) {
+          alert(
+            "Bitte fülle alle Pflichtfelder aus (Agent, Titel und Titelbild)!"
+          );
+          return;
         }
+
+        const titleImagePath = `images/lineups/${agent}/${map}/${titleImageFile.name}`;
+
+        const imagesPaths = imagesFiles.map(
+          (file) => `images/lineups/${agent}/${map}/${file.name}`
+        );
+
+        const newEntry = {
+          title,
+          titleImage: titleImagePath,
+          images: imagesPaths,
+          description: description || "-",
+          side,
+          map,
+        };
+
+        entries.push(newEntry);
+        updateJsonOutput();
+
+        // Felder zurücksetzen (optional)
+        titleInput.value = "";
+        titleImageInput.value = "";
+        imagesInput.value = "";
+        descriptionInput.value = "";
+        sideInput.selectedIndex = 0;
+        mapInput.selectedIndex = 0;
+      });
+
+      copyJsonBtn.addEventListener("click", () => {
+        const text = jsonOutput.value;
+        navigator.clipboard.writeText(text).then(() => {
+          alert("JSON kopiert!");
+        });
+      });
+
+      function updateJsonOutput() {
+        jsonOutput.value = JSON.stringify(entries, null, 2);
+      }
     </script>
-</body>
+  </body>
 </html>
