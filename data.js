@@ -1,7 +1,7 @@
 const data = {
   agents: {
     astra: {
-      description: "Infos folgen. Tipps hier hinzufügen.",
+      description: "Infos folgen.",
       image: "images/agents/astra.png",
       lineups: [],
     },
